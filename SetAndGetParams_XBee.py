@@ -34,7 +34,8 @@ PARAM_VALUE_PAN_ID = utils.hex_string_to_bytes("2015")
 PARAM_VALUE_DEST_ADDRESS_H = utils.hex_string_to_bytes("00")
 PARAM_VALUE_DEST_ADDRESS_L = utils.hex_string_to_bytes("FFFF")
 
-PARAM_VALUE_REMOTE_NODE_ADDR=utils.hex_string_to_bytes("0013A200415BFC59")
+PARAM_VALUE_REMOTE_NODE_ADDR=XBee64BitAddress.from_hex_string("0013A200415BFC59")
+PARAM_VALUE_REMOTE_NODE_ID = "Luke"
 PARAM_VALUE_REMOTE_NODE_SP=utils.hex_string_to_bytes("1FF")
 
 
@@ -63,15 +64,16 @@ def main():
         print("Destination address high:    %s" % utils.hex_to_string(local_device.get_parameter(PARAM_DEST_ADDRESS_H)))
         print("Destination address low:     %s" % utils.hex_to_string(local_device.get_parameter(PARAM_DEST_ADDRESS_L)))
 
+        # Set remote parameters.
+        remote_device.set_parameter(PARAM_NODE_ID, bytearray(PARAM_VALUE_REMOTE_NODE_ID, 'utf8'))
+        remote_device.set_parameter(PARAM_SLEEP_PER, PARAM_VALUE_REMOTE_NODE_SP)
+        remote_device.write_changes() #make changes permanet
 
         # Get remote parameters.
-        pan_id=utils.hex_to_string(remote_device.get_parameter(PARAM_PAN_ID))
-        print("Remote pan ID:               %s" % pan_id)
-
-        #dest_address = XBee64BitAddress.from_hex_string(PARAM_VALUE_REMOTE_NODE_ADDR)
-        #local_device.set_dest_address(dest_address)
-        #node_id = local_device.get_parameter(PARAM_NODE_ID).decode()
-        #print("Remote Node ID:               %s" % node_id)
+        #pan_id = utils.hex_to_string(remote_device.get_parameter(PARAM_PAN_ID))
+        #print("Remote pan ID:               %s" % pan_id)
+        print("Remote Node ID:              %s" % remote_device.get_parameter(PARAM_NODE_ID).decode())
+        print("Remote Node SP:              %s" % utils.hex_to_string(remote_device.get_parameter(PARAM_SLEEP_PER)))
 
         print("")
         print("All parameters were set correctly!")
