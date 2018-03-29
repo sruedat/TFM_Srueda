@@ -70,8 +70,6 @@ def main():
         remote_device.write_changes() #make changes permanet
 
         # Get remote parameters.
-        #pan_id = utils.hex_to_string(remote_device.get_parameter(PARAM_PAN_ID))
-        #print("Remote pan ID:               %s" % pan_id)
         print("Remote Node ID:              %s" % remote_device.get_parameter(PARAM_NODE_ID).decode())
         print("Remote Node SP:              %s" % utils.hex_to_string(remote_device.get_parameter(PARAM_SLEEP_PER)))
 

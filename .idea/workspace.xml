@@ -14,8 +14,8 @@
       <file leaf-file-name="Broadcast_XBee.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Broadcast_XBee.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
-              <caret line="18" column="41" selection-start-line="18" selection-start-column="41" selection-end-line="18" selection-end-column="41" />
+            <state relative-caret-position="357">
+              <caret line="21" column="6" selection-start-line="21" selection-start-column="6" selection-end-line="21" selection-end-column="6" />
               <folding>
                 <element signature="e#763#803#0" expanded="true" />
               </folding>
@@ -23,20 +23,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="devices.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/venv/Lib/site-packages/digi/xbee/devices.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2720">
-              <caret line="192" column="46" selection-start-line="192" selection-start-column="43" selection-end-line="192" selection-end-column="46" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="ReadRemoteADC_XBee.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ReadRemoteADC_XBee.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="680">
-              <caret line="43" column="8" selection-start-line="43" selection-start-column="8" selection-end-line="44" selection-end-column="68" />
+            <state relative-caret-position="462">
+              <caret line="51" column="16" selection-start-line="51" selection-start-column="16" selection-end-line="51" selection-end-column="16" />
               <folding>
                 <element signature="e#763#803#0" expanded="true" />
               </folding>
@@ -47,8 +38,8 @@
       <file leaf-file-name="DiscoverDevices_XBee.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/DiscoverDevices_XBee.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="697">
-              <caret line="44" lean-forward="true" selection-start-line="44" selection-end-line="44" />
+            <state relative-caret-position="360">
+              <caret line="44" selection-start-line="44" selection-end-line="44" />
               <folding>
                 <element signature="e#763#774#0" expanded="true" />
               </folding>
@@ -56,14 +47,32 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SetAndGetParams_XBee.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="SetAndGetParams_XBee.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/SetAndGetParams_XBee.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="713">
-              <caret line="60" column="25" lean-forward="true" selection-start-line="60" selection-start-column="25" selection-end-line="60" selection-end-column="25" />
+            <state relative-caret-position="632">
+              <caret line="78" column="7" selection-start-line="78" selection-start-column="4" selection-end-line="78" selection-end-column="7" />
               <folding>
                 <element signature="e#763#803#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="config.ini" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/config.ini">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="17">
+              <caret line="1" column="13" lean-forward="true" selection-start-line="1" selection-start-column="13" selection-end-line="1" selection-end-column="13" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SysConfig.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/SysConfig.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="272">
+              <caret line="16" column="35" lean-forward="true" selection-start-line="16" selection-start-column="35" selection-end-line="16" selection-end-column="35" />
             </state>
           </provider>
         </entry>
@@ -89,9 +98,11 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/../Test1/Broadcast_XBee.py" />
-        <option value="$PROJECT_DIR$/Broadcast_XBee.py" />
         <option value="$PROJECT_DIR$/DiscoverDevices_XBee.py" />
         <option value="$PROJECT_DIR$/SetAndGetParams_XBee.py" />
+        <option value="$PROJECT_DIR$/Broadcast_XBee.py" />
+        <option value="$PROJECT_DIR$/config.ini" />
+        <option value="$PROJECT_DIR$/SysConfig.py" />
       </list>
     </option>
   </component>
@@ -106,7 +117,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -153,6 +163,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -177,7 +188,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.SetAndGetParams_XBee (1)">
+  <component name="RunManager" selected="Python.Broadcast_XBee">
     <configuration name="Broadcast_XBee" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="TFM_Srueda" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -250,18 +261,38 @@
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
     </configuration>
+    <configuration name="SysConfig" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="TFM_Srueda" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/SysConfig.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
     <list>
       <item itemvalue="Python.Broadcast_XBee" />
       <item itemvalue="Python.DiscoverDevices_XBee" />
       <item itemvalue="Python.SetAndGetParams_XBee" />
       <item itemvalue="Python.SetAndGetParams_XBee (1)" />
+      <item itemvalue="Python.SysConfig" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.Broadcast_XBee" />
+        <item itemvalue="Python.SysConfig" />
         <item itemvalue="Python.SetAndGetParams_XBee (1)" />
         <item itemvalue="Python.SetAndGetParams_XBee" />
         <item itemvalue="Python.DiscoverDevices_XBee" />
-        <item itemvalue="Python.Broadcast_XBee" />
       </list>
     </recent_temporary>
   </component>
@@ -281,22 +312,22 @@
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="2575" height="1415" extended-state="6" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24990238" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24990238" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.32874617" />
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Python Console" order="7" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.32874617" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Terminal" order="7" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.3998471" />
       <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.3998471" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="Inspection Results" order="7" weight="0.3295107" />
       <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Find" order="1" />
     </layout>
@@ -316,6 +347,53 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/Broadcast_XBee.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="18" column="41" selection-start-line="18" selection-start-column="41" selection-end-line="18" selection-end-column="41" />
+          <folding>
+            <element signature="e#763#803#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/venv/Lib/site-packages/digi/xbee/devices.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3264">
+          <caret line="192" column="46" selection-start-line="192" selection-start-column="43" selection-end-line="192" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ReadRemoteADC_XBee.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="680">
+          <caret line="43" column="8" selection-start-line="43" selection-start-column="8" selection-end-line="44" selection-end-column="68" />
+          <folding>
+            <element signature="e#763#803#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DiscoverDevices_XBee.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="697">
+          <caret line="44" lean-forward="true" selection-start-line="44" selection-end-line="44" />
+          <folding>
+            <element signature="e#763#774#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SetAndGetParams_XBee.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="969">
+          <caret line="60" column="25" lean-forward="true" selection-start-line="60" selection-start-column="25" selection-end-line="60" selection-end-column="25" />
+          <folding>
+            <element signature="e#763#803#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Broadcast_XBee.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="272">
@@ -377,20 +455,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Broadcast_XBee.py">
+    <entry file="file://$PROJECT_DIR$/venv/Lib/site-packages/digi/xbee/devices.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="18" column="41" selection-start-line="18" selection-start-column="41" selection-end-line="18" selection-end-column="41" />
-          <folding>
-            <element signature="e#763#803#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="-85">
+          <caret line="192" column="46" selection-start-line="192" selection-start-column="43" selection-end-line="192" selection-end-column="46" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/DiscoverDevices_XBee.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="697">
-          <caret line="44" lean-forward="true" selection-start-line="44" selection-end-line="44" />
+        <state relative-caret-position="360">
+          <caret line="44" selection-start-line="44" selection-end-line="44" />
           <folding>
             <element signature="e#763#774#0" expanded="true" />
           </folding>
@@ -399,28 +474,45 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/ReadRemoteADC_XBee.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="680">
-          <caret line="43" column="8" selection-start-line="43" selection-start-column="8" selection-end-line="44" selection-end-column="68" />
+        <state relative-caret-position="462">
+          <caret line="51" column="16" selection-start-line="51" selection-start-column="16" selection-end-line="51" selection-end-column="16" />
           <folding>
             <element signature="e#763#803#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/venv/Lib/site-packages/digi/xbee/devices.py">
+    <entry file="file://$PROJECT_DIR$/Broadcast_XBee.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2720">
-          <caret line="192" column="46" selection-start-line="192" selection-start-column="43" selection-end-line="192" selection-end-column="46" />
+        <state relative-caret-position="357">
+          <caret line="21" column="6" selection-start-line="21" selection-start-column="6" selection-end-line="21" selection-end-column="6" />
+          <folding>
+            <element signature="e#763#803#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/SetAndGetParams_XBee.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="713">
-          <caret line="60" column="25" lean-forward="true" selection-start-line="60" selection-start-column="25" selection-end-line="60" selection-end-column="25" />
+        <state relative-caret-position="632">
+          <caret line="78" column="7" selection-start-line="78" selection-start-column="4" selection-end-line="78" selection-end-column="7" />
           <folding>
             <element signature="e#763#803#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config.ini">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" column="13" lean-forward="true" selection-start-line="1" selection-start-column="13" selection-end-line="1" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SysConfig.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="16" column="35" lean-forward="true" selection-start-line="16" selection-start-column="35" selection-end-line="16" selection-end-column="35" />
         </state>
       </provider>
     </entry>
