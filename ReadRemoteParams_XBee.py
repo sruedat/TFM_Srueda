@@ -14,8 +14,13 @@
 
 
 from digi.xbee.devices import XBeeDevice
+from digi.xbee.devices import RemoteZigBeeDevice
 from digi.xbee.util import utils
+from digi.xbee.models.address import XBee64BitAddress
 import SysConfig
+
+PARAM_VALUE_REMOTE_NODE_ADDR="0013A200415BFC59"
+
 
 # Parámetros de conexión con el puerto serie al dispositivo local
 PORT=SysConfig.ReadLocalPortFromFile()
@@ -23,120 +28,124 @@ BAUD_RATE = SysConfig.ReadLocalBaudRateFromFile()
 
 
 
-def main():
-    print(" +-----------------------------------------------+")
-    print(" |            Get Local XBee parameters          |")
-    print(" +-----------------------------------------------+\n")
+def main(NodeAddress):
+    Address=XBee64BitAddress.from_hex_string(NodeAddress)
+
+    print(" +------------------------------------------------------+")
+    print(" |  Get Remote XBee (" + NodeAddress + ") parameters       |")
+    print(" +------------------------------------------------------+\n")
 
     local_device = XBeeDevice(PORT, BAUD_RATE)
 
 
     try:
         local_device.open()
-       # Get Hardware Models with extended DIO (P5 to P9)
+        remote_device = RemoteZigBeeDevice(local_device, Address)
+
+        # Get Hardware Models with extended DIO (P5 to P9)
         Hardware_Extended = SysConfig.ReadHardwareVersionWhithP5ToP9PinsFromFile()
        # Get parameters.
         # Diagnostic Commads
-        VR = utils.hex_to_string(local_device.get_parameter("VR"))
-        HV = utils.hex_to_string(local_device.get_parameter("HV"))
-        AI = utils.hex_to_string(local_device.get_parameter("AI"))
-        DB = utils.hex_to_string(local_device.get_parameter("DB"))
-        V =  utils.hex_to_string(local_device.get_parameter("%V"))
+        VR = utils.hex_to_string(remote_device.get_parameter("VR"))
+        HV = utils.hex_to_string(remote_device.get_parameter("HV"))
+        AI = utils.hex_to_string(remote_device.get_parameter("AI"))
+        DB = utils.hex_to_string(remote_device.get_parameter("DB"))
+        V =  utils.hex_to_string(remote_device.get_parameter("%V"))
         # Networking
-        ID = utils.hex_to_string(local_device.get_parameter("ID"))
-        SC = utils.hex_to_string(local_device.get_parameter("SC"))
-        SD = utils.hex_to_string(local_device.get_parameter("SD"))
-        ZS = utils.hex_to_string(local_device.get_parameter("ZS"))
-        NJ = utils.hex_to_string(local_device.get_parameter("NJ"))
-        NW = utils.hex_to_string(local_device.get_parameter("NW"))
-        JV = utils.hex_to_string(local_device.get_parameter("JV"))
-        JN = utils.hex_to_string(local_device.get_parameter("JN"))
-        OP = utils.hex_to_string(local_device.get_parameter("OP"))
-        OI = utils.hex_to_string(local_device.get_parameter("OI"))
-        CH = utils.hex_to_string(local_device.get_parameter("CH"))
-        NC = utils.hex_to_string(local_device.get_parameter("NC"))
-        CE = utils.hex_to_string(local_device.get_parameter("CE"))
-        DO = utils.hex_to_string(local_device.get_parameter("DO"))
-        DC = utils.hex_to_string(local_device.get_parameter("DC"))
+        ID = utils.hex_to_string(remote_device.get_parameter("ID"))
+        SC = utils.hex_to_string(remote_device.get_parameter("SC"))
+        SD = utils.hex_to_string(remote_device.get_parameter("SD"))
+        ZS = utils.hex_to_string(remote_device.get_parameter("ZS"))
+        NJ = utils.hex_to_string(remote_device.get_parameter("NJ"))
+        NW = utils.hex_to_string(remote_device.get_parameter("NW"))
+        JV = utils.hex_to_string(remote_device.get_parameter("JV"))
+        JN = utils.hex_to_string(remote_device.get_parameter("JN"))
+        OP = utils.hex_to_string(remote_device.get_parameter("OP"))
+        OI = utils.hex_to_string(remote_device.get_parameter("OI"))
+        CH = utils.hex_to_string(remote_device.get_parameter("CH"))
+        NC = utils.hex_to_string(remote_device.get_parameter("NC"))
+        CE = utils.hex_to_string(remote_device.get_parameter("CE"))
+        DO = utils.hex_to_string(remote_device.get_parameter("DO"))
+        DC = utils.hex_to_string(remote_device.get_parameter("DC"))
         # Addressing
-        SH = utils.hex_to_string(local_device.get_parameter("SH"))
-        SL = utils.hex_to_string(local_device.get_parameter("SL"))
-        MY = utils.hex_to_string(local_device.get_parameter("MY"))
-        MP = utils.hex_to_string(local_device.get_parameter("MP"))
-        DH = utils.hex_to_string(local_device.get_parameter("DH"))
-        DL = utils.hex_to_string(local_device.get_parameter("DL"))
-        NI = local_device.get_parameter("NI").decode()
-        NH = utils.hex_to_string(local_device.get_parameter("NH"))
-        BH = utils.hex_to_string(local_device.get_parameter("BH"))
-        AR = utils.hex_to_string(local_device.get_parameter("AR"))
-        DD = utils.hex_to_string(local_device.get_parameter("DD"))
-        NT = utils.hex_to_string(local_device.get_parameter("NT"))
-        NO = utils.hex_to_string(local_device.get_parameter("NO"))
-        NP = utils.hex_to_string(local_device.get_parameter("NP"))
-        CR = utils.hex_to_string(local_device.get_parameter("CR"))
+        SH = utils.hex_to_string(remote_device.get_parameter("SH"))
+        SL = utils.hex_to_string(remote_device.get_parameter("SL"))
+        MY = utils.hex_to_string(remote_device.get_parameter("MY"))
+        MP = utils.hex_to_string(remote_device.get_parameter("MP"))
+        DH = utils.hex_to_string(remote_device.get_parameter("DH"))
+        DL = utils.hex_to_string(remote_device.get_parameter("DL"))
+        NI = remote_device.get_parameter("NI").decode()
+        NH = utils.hex_to_string(remote_device.get_parameter("NH"))
+        BH = utils.hex_to_string(remote_device.get_parameter("BH"))
+        AR = utils.hex_to_string(remote_device.get_parameter("AR"))
+        DD = utils.hex_to_string(remote_device.get_parameter("DD"))
+        NT = utils.hex_to_string(remote_device.get_parameter("NT"))
+        NO = utils.hex_to_string(remote_device.get_parameter("NO"))
+        NP = utils.hex_to_string(remote_device.get_parameter("NP"))
+        CR = utils.hex_to_string(remote_device.get_parameter("CR"))
         # ZigBee Addressing
-        SE = utils.hex_to_string(local_device.get_parameter("SE"))
-        DE = utils.hex_to_string(local_device.get_parameter("DE"))
-        CI = utils.hex_to_string(local_device.get_parameter("CI"))
-        TO = utils.hex_to_string(local_device.get_parameter("TO"))
+        SE = utils.hex_to_string(remote_device.get_parameter("SE"))
+        DE = utils.hex_to_string(remote_device.get_parameter("DE"))
+        CI = utils.hex_to_string(remote_device.get_parameter("CI"))
+        TO = utils.hex_to_string(remote_device.get_parameter("TO"))
         # RF Interfacing
-        PL = utils.hex_to_string(local_device.get_parameter("PL"))
-        PM = utils.hex_to_string(local_device.get_parameter("PM"))
-        PP = utils.hex_to_string(local_device.get_parameter("PP"))
+        PL = utils.hex_to_string(remote_device.get_parameter("PL"))
+        PM = utils.hex_to_string(remote_device.get_parameter("PM"))
+        PP = utils.hex_to_string(remote_device.get_parameter("PP"))
         # Security
-        EE = utils.hex_to_string(local_device.get_parameter("EE"))
-        EO = utils.hex_to_string(local_device.get_parameter("EO"))
-        KY = utils.hex_to_string(local_device.get_parameter("KY"))
-        NK = utils.hex_to_string(local_device.get_parameter("NK"))
+        EE = utils.hex_to_string(remote_device.get_parameter("EE"))
+        EO = utils.hex_to_string(remote_device.get_parameter("EO"))
+        KY = utils.hex_to_string(remote_device.get_parameter("KY"))
+        NK = utils.hex_to_string(remote_device.get_parameter("NK"))
         # Serial Interfacing
-        BD = utils.hex_to_string(local_device.get_parameter("BD"))
-        NB = utils.hex_to_string(local_device.get_parameter("NB"))
-        SB = utils.hex_to_string(local_device.get_parameter("SB"))
-        RO = utils.hex_to_string(local_device.get_parameter("RO"))
-        D6 = utils.hex_to_string(local_device.get_parameter("D6"))
-        D7 = utils.hex_to_string(local_device.get_parameter("D7"))
-        AP = utils.hex_to_string(local_device.get_parameter("AP"))
-        AO = utils.hex_to_string(local_device.get_parameter("AO"))
+        BD = utils.hex_to_string(remote_device.get_parameter("BD"))
+        NB = utils.hex_to_string(remote_device.get_parameter("NB"))
+        SB = utils.hex_to_string(remote_device.get_parameter("SB"))
+        RO = utils.hex_to_string(remote_device.get_parameter("RO"))
+        D6 = utils.hex_to_string(remote_device.get_parameter("D6"))
+        D7 = utils.hex_to_string(remote_device.get_parameter("D7"))
+        AP = utils.hex_to_string(remote_device.get_parameter("AP"))
+        AO = utils.hex_to_string(remote_device.get_parameter("AO"))
         # AT Command Options
-        CT = utils.hex_to_string(local_device.get_parameter("CT"))
-        GT = utils.hex_to_string(local_device.get_parameter("GT"))
-        CC = utils.hex_to_string(local_device.get_parameter("CC"))
+        CT = utils.hex_to_string(remote_device.get_parameter("CT"))
+        GT = utils.hex_to_string(remote_device.get_parameter("GT"))
+        CC = utils.hex_to_string(remote_device.get_parameter("CC"))
         # Sleep Modes
-        SP = utils.hex_to_string(local_device.get_parameter("SP"))
-        SN = utils.hex_to_string(local_device.get_parameter("SN"))
-        SM = utils.hex_to_string(local_device.get_parameter("SM"))
-        ST = utils.hex_to_string(local_device.get_parameter("ST"))
-        SO = utils.hex_to_string(local_device.get_parameter("SO"))
-        WH = utils.hex_to_string(local_device.get_parameter("WH"))
-        PO = utils.hex_to_string(local_device.get_parameter("PO"))
+        SP = utils.hex_to_string(remote_device.get_parameter("SP"))
+        SN = utils.hex_to_string(remote_device.get_parameter("SN"))
+        SM = utils.hex_to_string(remote_device.get_parameter("SM"))
+        ST = utils.hex_to_string(remote_device.get_parameter("ST"))
+        SO = utils.hex_to_string(remote_device.get_parameter("SO"))
+        WH = utils.hex_to_string(remote_device.get_parameter("WH"))
+        PO = utils.hex_to_string(remote_device.get_parameter("PO"))
         # I/O Settomgs
-        D0 = utils.hex_to_string(local_device.get_parameter("D0"))
-        D1 = utils.hex_to_string(local_device.get_parameter("D1"))
-        D2 = utils.hex_to_string(local_device.get_parameter("D2"))
-        D3 = utils.hex_to_string(local_device.get_parameter("D3"))
-        D4 = utils.hex_to_string(local_device.get_parameter("D4"))
-        D5 = utils.hex_to_string(local_device.get_parameter("D5"))
-        D8 = utils.hex_to_string(local_device.get_parameter("D8"))
-        D9 = utils.hex_to_string(local_device.get_parameter("D9"))
-        P0 = utils.hex_to_string(local_device.get_parameter("P0"))
-        P1 = utils.hex_to_string(local_device.get_parameter("P1"))
-        P2 = utils.hex_to_string(local_device.get_parameter("P2"))
-        P3 = utils.hex_to_string(local_device.get_parameter("P3"))
-        P4 = utils.hex_to_string(local_device.get_parameter("P4"))
+        D0 = utils.hex_to_string(remote_device.get_parameter("D0"))
+        D1 = utils.hex_to_string(remote_device.get_parameter("D1"))
+        D2 = utils.hex_to_string(remote_device.get_parameter("D2"))
+        D3 = utils.hex_to_string(remote_device.get_parameter("D3"))
+        D4 = utils.hex_to_string(remote_device.get_parameter("D4"))
+        D5 = utils.hex_to_string(remote_device.get_parameter("D5"))
+        D8 = utils.hex_to_string(remote_device.get_parameter("D8"))
+        D9 = utils.hex_to_string(remote_device.get_parameter("D9"))
+        P0 = utils.hex_to_string(remote_device.get_parameter("P0"))
+        P1 = utils.hex_to_string(remote_device.get_parameter("P1"))
+        P2 = utils.hex_to_string(remote_device.get_parameter("P2"))
+        P3 = utils.hex_to_string(remote_device.get_parameter("P3"))
+        P4 = utils.hex_to_string(remote_device.get_parameter("P4"))
         if HV == Hardware_Extended:
-            P5 = utils.hex_to_string(local_device.get_parameter("P5"))
-            P6 = utils.hex_to_string(local_device.get_parameter("P6"))
-            P7 = utils.hex_to_string(local_device.get_parameter("P7"))
-            P8 = utils.hex_to_string(local_device.get_parameter("P8"))
-            P9 = utils.hex_to_string(local_device.get_parameter("P9"))
-        PR = utils.hex_to_string(local_device.get_parameter("PR"))
-        PD = utils.hex_to_string(local_device.get_parameter("PD"))
-        LT = utils.hex_to_string(local_device.get_parameter("LT"))
-        RP = utils.hex_to_string(local_device.get_parameter("RP"))
+            P5 = utils.hex_to_string(remote_device.get_parameter("P5"))
+            P6 = utils.hex_to_string(remote_device.get_parameter("P6"))
+            P7 = utils.hex_to_string(remote_device.get_parameter("P7"))
+            P8 = utils.hex_to_string(remote_device.get_parameter("P8"))
+            P9 = utils.hex_to_string(remote_device.get_parameter("P9"))
+        PR = utils.hex_to_string(remote_device.get_parameter("PR"))
+        PD = utils.hex_to_string(remote_device.get_parameter("PD"))
+        LT = utils.hex_to_string(remote_device.get_parameter("LT"))
+        RP = utils.hex_to_string(remote_device.get_parameter("RP"))
         # I/O Sampling
-        IR = utils.hex_to_string(local_device.get_parameter("IR"))
-        IC = utils.hex_to_string(local_device.get_parameter("IC"))
-        Vplus = utils.hex_to_string(local_device.get_parameter("V+"))
+        IR = utils.hex_to_string(remote_device.get_parameter("IR"))
+        IC = utils.hex_to_string(remote_device.get_parameter("IC"))
+        Vplus = utils.hex_to_string(remote_device.get_parameter("V+"))
 
 
 
@@ -279,9 +288,9 @@ def main():
 
 
     finally:
-        if local_device is not None and local_device.is_open():
+        if local_device.is_open():
             local_device.close()
 
 
 if __name__ == '__main__':
-    main()
+    main(PARAM_VALUE_REMOTE_NODE_ADDR)
