@@ -15,24 +15,26 @@
 
 from digi.xbee.devices import XBeeDevice
 from digi.xbee.util import utils
+import sys
 import SysConfig
-
-# Parámetros de conexión con el puerto serie al dispositivo local
-PORT=SysConfig.ReadLocalPortFromFile()
-BAUD_RATE = SysConfig.ReadLocalBaudRateFromFile()
-
-
+sys.tracebacklimit = 0
 
 def main():
-    print(" +-----------------------------------------------+")
-    print(" |            Get Local XBee parameters          |")
-    print(" +-----------------------------------------------+\n")
 
+    # Parámetros de conexión con el puerto serie al dispositivo local
+    PORT = SysConfig.ReadLocalPortFromFile()
+    BAUD_RATE = SysConfig.ReadLocalBaudRateFromFile()
     local_device = XBeeDevice(PORT, BAUD_RATE)
 
 
     try:
+
+        print(" +-----------------------------------------------+")
+        print(" |         Get Local XBee Parameters             |")
+        print(" +-----------------------------------------------+\n")
+
         local_device.open()
+
        # Get Hardware Models with extended DIO (P5 to P9)
         Hardware_Extended = SysConfig.ReadHardwareVersionWhithP5ToP9PinsFromFile()
        # Get parameters.
@@ -137,9 +139,6 @@ def main():
         IR = utils.hex_to_string(local_device.get_parameter("IR"))
         IC = utils.hex_to_string(local_device.get_parameter("IC"))
         Vplus = utils.hex_to_string(local_device.get_parameter("V+"))
-
-
-
 
         #print parameters
         print(" +-----------------------------+")
@@ -276,6 +275,10 @@ def main():
         print(" RSSI of Last Packet:         %s" % DB)
         print(" Supply Votage:               %s" % V + "\n")
 
+    except:
+        if local_device.is_open():
+            local_device.close()
+        pass
 
 
     finally:

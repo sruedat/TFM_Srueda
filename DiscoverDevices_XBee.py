@@ -12,10 +12,10 @@
 # ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-import time
-
+import time, sys
 from digi.xbee.models.status import NetworkDiscoveryStatus
 from digi.xbee.devices import XBeeDevice
+sys.tracebacklimit = 0
 
 # TODO: Replace with the serial port where your local module is connected to.
 PORT = "COM6"
@@ -60,6 +60,11 @@ def main():
 
         while xbee_network.is_discovery_running():
             time.sleep(0.1)
+
+    except:
+        if device.is_open():
+            device.close()
+        pass
 
     finally:
         if device is not None and device.is_open():

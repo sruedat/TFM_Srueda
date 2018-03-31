@@ -14,8 +14,9 @@
 
 from digi.xbee.devices import XBeeDevice
 from digi.xbee.io import IOLine, IOMode
-import time
-import threading
+import time, sys, threading
+sys.tracebacklimit = 0
+
 
 # TODO: Replace with the serial port where your local module is connected to.
 PORT = "COM6"

@@ -17,7 +17,9 @@ from digi.xbee.devices import XBeeDevice
 from digi.xbee.devices import RemoteZigBeeDevice
 from digi.xbee.util import utils
 from digi.xbee.models.address import XBee64BitAddress
+import sys
 import SysConfig
+sys.tracebacklimit = 0
 
 PARAM_VALUE_REMOTE_NODE_ADDR="0013A200415BFC59"
 
@@ -285,6 +287,11 @@ def main(NodeAddress):
         print(" RSSI of Last Packet:         %s" % DB)
         print(" Supply Votage:               %s" % V + "\n")
 
+
+    except:
+        if local_device.is_open():
+            local_device.close()
+        pass
 
 
     finally:
