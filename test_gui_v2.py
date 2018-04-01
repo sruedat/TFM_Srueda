@@ -1,54 +1,82 @@
 from tkinter import *
 from tkinter import ttk
 
+import DiscoverDevices_XBee
+
 root = Tk()
 
 root.title("Digi XBee-Zigbee Network management. Srueda (TFM - uoc 2018)")
-root.columnconfigure(0, weight=1)
 root.columnconfigure(1, weight=1)
-root.rowconfigure(0, weight=1)
+root.columnconfigure(1, weight=1)
+root.rowconfigure(1, weight=1)
 root.rowconfigure(1, weight=1)
 
+#contenedor paneles izquierdos
+left_pane = PanedWindow(root, orient=VERTICAL)
+left_pane.grid(column=0, row=0, rowspan=2, sticky=(N, W, E, S))
+left_pane.rowconfigure(0, weight=1)
+left_pane.columnconfigure(0, weight=1)
 
-left_right_pane = PanedWindow(root, orient=HORIZONTAL, relief='groove', borderwidth=4, width=700, heigh=500)
-left_right_pane.grid(column=0, row=0, sticky=(W,S,E,N), columnspan=2)
-left_right_pane.rowconfigure(0, weight=1)
-left_right_pane.columnconfigure(0, weight=1)
-left_right_pane.rowconfigure(1, weight=1)
-left_right_pane.columnconfigure(1, weight=1)
+left_upperframe = ttk.Frame(root, relief='groove', borderwidth=2)
+left_upperframe.grid(column=0, row=0, sticky=(N, W, E, S))
+left_upperframe.columnconfigure(0, weight=1)
+left_upperframe.rowconfigure(0, weight=1)
+left_pane.add(left_upperframe, heigh=430, width=300)
+
+left_bottomframe = ttk.Frame(left_pane, relief='groove', borderwidth=2)
+left_bottomframe.grid(column=0, row=1, sticky=(N, W, E, S))
+left_bottomframe.columnconfigure(0, weight=1)
+left_bottomframe.rowconfigure(0, weight=1)
+left_pane.add(left_bottomframe, heigh=40)
+
+#contenedor paneles derechos
+right_pane = PanedWindow(root, orient=VERTICAL)
+right_pane.grid(column=1, row=0, rowspan=2, sticky=(N, W, E, S))
+right_pane.rowconfigure(0, weight=1)
+right_pane.columnconfigure(0, weight=1)
 
 
-leftframe = ttk.Frame(root, relief='groove', borderwidth=2)
-leftframe.grid(column=0, row=0, sticky=(N, W, E, S), rowspan=2)
-leftframe.rowconfigure(0, weight=1)
-leftframe.columnconfigure(0, weight=1)
-left_right_pane.add(leftframe, width=300) #aquí me he quedado
+right_upperframe = ttk.Frame(root, relief='groove', borderwidth=2)
+right_upperframe.grid(column=1, row=0, sticky=(N, W, E, S))
+right_upperframe.columnconfigure(0, weight=1)
+right_upperframe.rowconfigure(0, weight=1)
+right_pane.add(right_upperframe, width=600, heigh=430)
 
-top_bottom_pane = PanedWindow(root, orient=VERTICAL)
-top_bottom_pane.grid(column=1, row=0, rowspan=2, sticky=(N, W, E, S))
-top_bottom_pane.rowconfigure(0, weight=1)
-top_bottom_pane.columnconfigure(0, weight=1)
-left_right_pane.add(top_bottom_pane)
+right_bottomframe = ttk.Frame(right_pane, relief='groove', borderwidth=2)
+right_bottomframe.grid(column=1, row=1, sticky=(N, W, E, S))
+right_bottomframe.columnconfigure(0, weight=1)
+right_bottomframe.rowconfigure(0, weight=1)
+right_pane.add(right_bottomframe)
 
-upperframe = ttk.Frame(root, relief='groove', borderwidth=2)
-upperframe.grid(column=1, row=0, sticky=(N, W, E, S))
-upperframe.columnconfigure(1, weight=1)
-upperframe.rowconfigure(0, weight=1)
-top_bottom_pane.add(upperframe)
 
-bottomframe = ttk.Frame(top_bottom_pane, relief='groove', borderwidth=2)
-bottomframe.grid(column=1, row=1, sticky=(N, W, E, S))
-bottomframe.columnconfigure(1, weight=1)
-bottomframe.rowconfigure(1, weight=1)
-top_bottom_pane.add(bottomframe)
 
-entry = ttk.Entry(leftframe)
-entry.grid(column=0, row=0, sticky=(W,S,E,N))
-
-top = Label(upperframe, text="top pane")
+# etiquetas
+top = Label(right_upperframe, text="top pane")
 top.grid(column=1, row=0, sticky=(W,S,E,N))
 
-bottom = Label(bottomframe, text="bottom pane")
-bottom.grid(column=1, row=1, sticky=(W,S,E,N))
+entry = ttk.Frame(right_bottomframe)
+entry2 = ttk.Entry(right_bottomframe)
+entry.grid(column=2, row=1, sticky=(W,S,E,N))
+entry2.grid(column=3, row=1, sticky=(W,S,E,N))
+entry.columnconfigure(0, weight=1)
+entry2.rowconfigure(0, weight=3)
+lbl = Label(entry, text="Node Address:")
+lbl.grid(sticky=W, pady=4, padx=5)
+
+# Botones
+discover = ttk.Button(left_bottomframe,text="Discover Network", command=DiscoverDevices_XBee)
+discover.grid(column=0, row=0, sticky=(W,S,E,N))
+if DiscoverDevices_XBee.state == 0:
+    texto = "Press 'Discover Network' button to find devices \n"
+elif DiscoverDevices_XBee.state == 1:
+    texto = "Discovering remote XBee devices..."
+
+discoverlab =Label (left_upperframe, text = texto)
+#discoverlab.pack()
+discoverlab.grid(column =0, row= 0, sticky=W, pady=4, padx=5)
+
+
+
+
 
 mainloop()
