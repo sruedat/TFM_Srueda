@@ -21,16 +21,18 @@ sys.tracebacklimit = 0
 PORT = "COM6"
 # TODO: Replace with the baud rate of your local module.
 BAUD_RATE = 9600
-texto = "original"
+log=""
+
+
 
 def main():
-
+    global log
+    st=0
     print(" +---------------------------------------------+")
     print(" | XBee Python Library Discover Devices Sample |")
     print(" +---------------------------------------------+\n")
-
     device = XBeeDevice(PORT, BAUD_RATE)
-
+    log =""
     try:
         device.open()
 
@@ -42,16 +44,29 @@ def main():
 
         # Callback for discovered devices.
         def callback_device_discovered(remote):
+            global log
             print("Device discovered: %s" % remote)
+            log =log+"\n \n Device discovered: %s" % remote
+
+
+
 
         # Callback for discovery finished.
         def callback_discovery_finished(status):
+            global log
             if status == NetworkDiscoveryStatus.SUCCESS:
-                print("Discovery process finished successfully.")
+                print("\n"+"Discovery process finished successfully.")
+                log=log + "\n \n Discovery process finished successfully."
+
+
             else:
                 print("There was an error discovering devices: %s" % status.description)
+                log= log + "\n \n There was an error discovering devices: %s" % status.description
+
+
 
         xbee_network.add_device_discovered_callback(callback_device_discovered)
+
 
         xbee_network.add_discovery_process_finished_callback(callback_discovery_finished)
 
@@ -62,9 +77,13 @@ def main():
 
 
 
+
+
+
+
         while xbee_network.is_discovery_running():
-            texto ="discovering"
             time.sleep(0.1)
+
 
     except:
         if device.is_open():
@@ -76,7 +95,8 @@ def main():
             device.close()
 
 
-
+    return log
 
 if __name__ == '__main__':
     main()
+

@@ -14,11 +14,8 @@
       <file leaf-file-name="ReadLocalParams_XBee.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ReadLocalParams_XBee.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="510">
+            <state relative-caret-position="561">
               <caret line="33" column="8" selection-start-line="33" selection-start-column="8" selection-end-line="33" selection-end-column="8" />
-              <folding>
-                <element signature="e#754#794#0" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -26,11 +23,8 @@
       <file leaf-file-name="ReadRemoteADC_XBee.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ReadRemoteADC_XBee.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
+            <state relative-caret-position="-85">
               <caret line="19" selection-start-line="19" selection-end-line="19" />
-              <folding>
-                <element signature="e#763#803#0" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -38,11 +32,20 @@
       <file leaf-file-name="DiscoverDevices_XBee.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/DiscoverDevices_XBee.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="901">
-              <caret line="55" column="89" selection-start-line="55" selection-start-column="89" selection-end-line="55" selection-end-column="89" />
+            <state relative-caret-position="17">
+              <caret line="24" lean-forward="true" selection-start-line="24" selection-end-line="24" />
               <folding>
                 <element signature="e#763#779#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="test_logs.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/test_logs.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="275">
+              <caret line="24" column="14" selection-start-line="24" selection-start-column="14" selection-end-line="24" selection-end-column="14" />
             </state>
           </provider>
         </entry>
@@ -71,7 +74,7 @@
       <file leaf-file-name="WriteRemoteParams_XBee.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/WriteRemoteParams_XBee.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2380">
+            <state relative-caret-position="1924">
               <caret line="145" column="12" selection-start-line="145" selection-start-column="12" selection-end-line="145" selection-end-column="12" />
               <folding>
                 <element signature="e#754#794#0" expanded="true" />
@@ -80,37 +83,25 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ReadRemoteParams_XBee.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ReadRemoteParams_XBee.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="700">
-              <caret line="293" column="12" selection-start-line="293" selection-start-column="12" selection-end-line="293" selection-end-column="12" />
-              <folding>
-                <element signature="e#754#794#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="test_gui.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test_gui.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
-              <caret line="18" column="35" lean-forward="true" selection-start-line="18" selection-start-column="8" selection-end-line="18" selection-end-column="35" />
-              <folding>
-                <element signature="e#0#21#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="test_gui3.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="test_gui3.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/test_gui3.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1053">
-              <caret line="93" column="5" selection-start-line="93" selection-start-column="5" selection-end-line="93" selection-end-column="5" />
+            <state relative-caret-position="306">
+              <caret line="18" column="36" selection-start-line="18" selection-start-column="36" selection-end-line="18" selection-end-column="36" />
               <folding>
                 <element signature="e#0#21#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="overflow.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/overflow.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="323">
+              <caret line="22" column="12" selection-start-line="22" selection-start-column="8" selection-end-line="22" selection-end-column="12" />
+              <folding>
+                <element signature="e#0#20#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -133,6 +124,7 @@
       <find>()</find>
       <find>get</find>
       <find>local_device.s</find>
+      <find>str</find>
     </findStrings>
     <replaceStrings>
       <replace>remote_device</replace>
@@ -160,15 +152,17 @@
         <option value="$PROJECT_DIR$/SysConfig.py" />
         <option value="$PROJECT_DIR$/ReadLocalParams_XBee.py" />
         <option value="$PROJECT_DIR$/test_gui_v2.py" />
-        <option value="$PROJECT_DIR$/DiscoverDevices_XBee.py" />
+        <option value="$PROJECT_DIR$/test_logs.py" />
         <option value="$PROJECT_DIR$/test_gui.py" />
+        <option value="$PROJECT_DIR$/DiscoverDevices_XBee.py" />
         <option value="$PROJECT_DIR$/test_gui3.py" />
+        <option value="$PROJECT_DIR$/overflow.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="889" />
-    <option name="y" value="370" />
+    <option name="x" value="-12" />
+    <option name="y" value="-12" />
     <option name="width" value="936" />
     <option name="height" value="699" />
   </component>
@@ -177,7 +171,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -214,6 +207,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -222,12 +216,12 @@
     <property name="settings.editor.selected.configurable" value="vcs.Git" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\sruedat\PycharmProjects\TFM_Srueda" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\sruedat\PycharmProjects\TFM_Srueda\Old" />
       <recent name="C:\Users\sruedat\PycharmProjects\TFM_Srueda\Config" />
-      <recent name="C:\Users\sruedat\PycharmProjects\TFM_Srueda" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\sruedat\PycharmProjects\TFM_Srueda" />
     </key>
   </component>
@@ -262,7 +256,7 @@
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
     </configuration>
-    <configuration name="SysConfig" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="overflow" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="TFM_Srueda" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -274,7 +268,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/SysConfig.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/overflow.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -316,7 +310,7 @@
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
     </configuration>
-    <configuration name="test_gui_v2" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="test_logs" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="TFM_Srueda" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -328,7 +322,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/test_gui_v2.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/test_logs.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -336,18 +330,18 @@
     </configuration>
     <list>
       <item itemvalue="Python.test_gui" />
-      <item itemvalue="Python.test_gui_v2" />
       <item itemvalue="Python.DiscoverDevices_XBee" />
       <item itemvalue="Python.test_gui3" />
-      <item itemvalue="Python.SysConfig" />
+      <item itemvalue="Python.test_logs" />
+      <item itemvalue="Python.overflow" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Python.test_gui3" />
+        <item itemvalue="Python.overflow" />
         <item itemvalue="Python.test_gui" />
-        <item itemvalue="Python.SysConfig" />
         <item itemvalue="Python.DiscoverDevices_XBee" />
-        <item itemvalue="Python.test_gui_v2" />
+        <item itemvalue="Python.test_logs" />
       </list>
     </recent_temporary>
   </component>
@@ -403,23 +397,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Old/Broadcast_XBee.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="25" column="49" lean-forward="true" selection-start-line="25" selection-end-line="25" selection-end-column="49" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/DiscoverDevices_XBee.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="24" lean-forward="true" selection-start-line="24" selection-end-line="24" />
-          <folding>
-            <element signature="e#763#779#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Old/SetAndGetParams_XBee.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
@@ -445,9 +422,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2363">
           <caret line="141" selection-start-line="141" selection-end-line="141" />
-          <folding>
-            <element signature="e#754#794#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -486,9 +460,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="816">
           <caret line="51" column="16" selection-start-line="51" selection-start-column="16" selection-end-line="51" selection-end-column="16" />
-          <folding>
-            <element signature="e#763#803#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -534,9 +505,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="816">
           <caret line="51" column="16" selection-start-line="51" selection-start-column="16" selection-end-line="51" selection-end-column="16" />
-          <folding>
-            <element signature="e#763#803#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -589,9 +557,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="680">
           <caret line="43" column="8" selection-start-line="43" selection-start-column="8" selection-end-line="44" selection-end-column="68" />
-          <folding>
-            <element signature="e#763#803#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -630,9 +595,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="680">
           <caret line="43" column="8" lean-forward="true" selection-start-line="43" selection-start-column="8" selection-end-line="44" selection-end-column="68" />
-          <folding>
-            <element signature="e#763#803#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -733,13 +695,24 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/WriteRemoteParams_XBee.py">
+    <entry file="file://$PROJECT_DIR$/test_gui_v2.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2380">
-          <caret line="145" column="12" selection-start-line="145" selection-start-column="12" selection-end-line="145" selection-end-column="12" />
-          <folding>
-            <element signature="e#754#794#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="513">
+          <caret line="74" column="19" lean-forward="true" selection-start-line="74" selection-start-column="19" selection-end-line="74" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ReadLocalParams_XBee.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="561">
+          <caret line="33" column="8" selection-start-line="33" selection-start-column="8" selection-end-line="33" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ReadRemoteADC_XBee.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-85">
+          <caret line="19" selection-start-line="19" selection-end-line="19" />
         </state>
       </provider>
     </entry>
@@ -750,46 +723,16 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test_gui_v2.py">
+    <entry file="file://$PROJECT_DIR$/test_logs.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="513">
-          <caret line="74" column="19" lean-forward="true" selection-start-line="74" selection-start-column="19" selection-end-line="74" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ReadRemoteADC_XBee.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="19" selection-start-line="19" selection-end-line="19" />
-          <folding>
-            <element signature="e#763#803#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/DiscoverDevices_XBee.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="901">
-          <caret line="55" column="89" selection-start-line="55" selection-start-column="89" selection-end-line="55" selection-end-column="89" />
-          <folding>
-            <element signature="e#763#779#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ReadLocalParams_XBee.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="510">
-          <caret line="33" column="8" selection-start-line="33" selection-start-column="8" selection-end-line="33" selection-end-column="8" />
-          <folding>
-            <element signature="e#754#794#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="275">
+          <caret line="24" column="14" selection-start-line="24" selection-start-column="14" selection-end-line="24" selection-end-column="14" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ReadRemoteParams_XBee.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="700">
+        <state relative-caret-position="479">
           <caret line="293" column="12" selection-start-line="293" selection-start-column="12" selection-end-line="293" selection-end-column="12" />
           <folding>
             <element signature="e#754#794#0" expanded="true" />
@@ -799,20 +742,50 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/test_gui.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="18" column="35" lean-forward="true" selection-start-line="18" selection-start-column="8" selection-end-line="18" selection-end-column="35" />
+        <state relative-caret-position="85">
+          <caret line="5" column="8" selection-start-line="5" selection-start-column="8" selection-end-line="5" selection-end-column="8" />
           <folding>
             <element signature="e#0#21#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/WriteRemoteParams_XBee.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1924">
+          <caret line="145" column="12" selection-start-line="145" selection-start-column="12" selection-end-line="145" selection-end-column="12" />
+          <folding>
+            <element signature="e#754#794#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DiscoverDevices_XBee.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="24" lean-forward="true" selection-start-line="24" selection-end-line="24" />
+          <folding>
+            <element signature="e#763#779#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/test_gui3.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1053">
-          <caret line="93" column="5" selection-start-line="93" selection-start-column="5" selection-end-line="93" selection-end-column="5" />
+        <state relative-caret-position="306">
+          <caret line="18" column="36" selection-start-line="18" selection-start-column="36" selection-end-line="18" selection-end-column="36" />
           <folding>
             <element signature="e#0#21#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/overflow.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="22" column="12" selection-start-line="22" selection-start-column="8" selection-end-line="22" selection-end-column="12" />
+          <folding>
+            <element signature="e#0#20#0" expanded="true" />
           </folding>
         </state>
       </provider>

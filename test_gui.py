@@ -11,9 +11,9 @@ class Application(Frame):
     def UpdateDiscoverStatus(self):
         self.texto.set("Discovering devices 1...")
         self.discoverlab.config(textvar=self.texto)
-        time.sleep(1)
-        self.texto.set("Discovering devices 2...")
-        self.discoverlab.config(textvar=self.texto)
+        #time.sleep(1)
+        #self.texto.set("Discovering devices 2...")
+        #self.discoverlab.config(textvar=self.texto)
 
 
        #DiscoverDevices_XBee.main()
