@@ -13,6 +13,9 @@
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 import time, sys
+from digi.xbee.util import utils
+
+
 from digi.xbee.models.status import NetworkDiscoveryStatus
 from digi.xbee.devices import XBeeDevice
 sys.tracebacklimit = 0
@@ -24,10 +27,13 @@ BAUD_RATE = 9600
 log=""
 
 
+def passlog():
+    global log
+    time.sleep(0.2)
+    return log
 
 def main():
     global log
-    st=0
     print(" +---------------------------------------------+")
     print(" | XBee Python Library Discover Devices Sample |")
     print(" +---------------------------------------------+\n")
@@ -45,8 +51,11 @@ def main():
         # Callback for discovered devices.
         def callback_device_discovered(remote):
             global log
-            print("Device discovered: %s" % remote)
-            log =log+"\n \n Device discovered: %s" % remote
+            #print("Device discovered:\n" + "%s" % remote)
+            log =log+"Device discovered:\n" + "%s" % remote +"\n\n"
+
+
+
 
 
 
@@ -55,34 +64,33 @@ def main():
         def callback_discovery_finished(status):
             global log
             if status == NetworkDiscoveryStatus.SUCCESS:
-                print("\n"+"Discovery process finished successfully.")
-                log=log + "\n \n Discovery process finished successfully."
-
-
+                #print("\n"+"Discovery process finished successfully.")
+                log=log+"Discovery process finished successfully.\n"
             else:
-                print("There was an error discovering devices: %s" % status.description)
-                log= log + "\n \n There was an error discovering devices: %s" % status.description
+                #print("There was an error discovering devices: %s" % status.description)
+                log= log+"There was an error discovering devices: %s\n" % status.description
 
 
 
         xbee_network.add_device_discovered_callback(callback_device_discovered)
 
-
         xbee_network.add_discovery_process_finished_callback(callback_discovery_finished)
 
         xbee_network.start_discovery_process()
 
-        print("Discovering remote XBee devices...")
-
-
-
-
-
-
+        #print("Discovering remote XBee devices...")
+        log = "\nDiscovering remote XBee devices...\n\n"
 
 
         while xbee_network.is_discovery_running():
+            passlog()
             time.sleep(0.1)
+
+
+
+
+
+
 
 
     except:
@@ -94,9 +102,13 @@ def main():
         if device is not None and device.is_open():
             device.close()
 
+    state=1
+    return state
 
-    return log
+
+
 
 if __name__ == '__main__':
     main()
+
 
