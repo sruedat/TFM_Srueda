@@ -14,16 +14,16 @@
 
 from digi.xbee.devices import XBeeDevice
 import time
-import SysConfig
+import read_sys_config
 
 
 
 # TODO: Replace with the serial port where your local module is connected to.
-PORT=SysConfig.ReadLocalPortFromFile()
+PORT=read_sys_config.ReadLocalPortFromFile()
 
 
 # TODO: Replace with the baud rate of your local module.
-BAUD_RATE = SysConfig.ReadLocalBaudRateFromFile()
+BAUD_RATE = read_sys_config.ReadLocalBaudRateFromFile()
 
 DATA_TO_SEND = "Hello XBee!"
 

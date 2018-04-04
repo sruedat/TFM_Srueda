@@ -15,22 +15,17 @@
 
 import configparser
 
-CONFIG_FILE = "Config/config.ini"
-
+config_file = "config/sys_config.ini"
 
 settings = configparser.ConfigParser()
-settings.read(CONFIG_FILE)
-
-def ReadHardwareVersionWhithP5ToP9PinsFromFile():
-    return settings.get("COMMON", "HARDWARE_VERSION_WITH_P5_TO_P9")
-
-def ReadLocalPortFromFile():
-    return settings.get("LOCAL_NODE", "PORT")
+settings.read (config_file)
 
 
-def ReadLocalBaudRateFromFile():
-    return settings.get("LOCAL_NODE", "PORT_BAUD_RATE")
 
+def set_path_to_file(path):
+    global config_file
+    config_file = "config/" + path +".ini"
+    settings.read(config_file)
 
 
 
@@ -338,7 +333,7 @@ def ReadSupplyVoltageHihgThresholdFromFile(Address):
 
 def main():
     try:
-        settings.read(CONFIG_FILE)
+        settings.read(config_file)
 
     except:
         print("error opening config.ini")

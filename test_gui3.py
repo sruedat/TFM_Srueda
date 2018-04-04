@@ -4,8 +4,10 @@ import threading
 import queue
 import time
 import DiscoverDevices_XBee
-import ReadLocalParams_XBee
-import ReadRemoteParams_XBee
+import read_local_params_xbee
+import read_remote_params_xbee
+import write_remote_params_xbee
+import os
 
 
 class Application(tk.Frame):
@@ -19,6 +21,12 @@ class Application(tk.Frame):
         self.queue = queue.Queue()
         self.create_widgets()
 
+
+    def open_config_file(self):
+        dirname= os.path.dirname(__file__)+ "/config/sys_config.ini"
+        print (dirname)
+        os.startfile(dirname)
+
     @staticmethod
     def read_remote_xbee_cmmd(self, boton1, boton2, boton3):
         self.text_params.config(state="normal")
@@ -28,7 +36,7 @@ class Application(tk.Frame):
             for n in range (len(data),16):
                 data= "0" + data
         self.text_params.insert(tk.INSERT,'Trying to access to remote device: ' + data + '\n\n')
-        self.text_params.insert(tk.INSERT, ReadRemoteParams_XBee.main(data))
+        self.text_params.insert(tk.INSERT, read_remote_params_xbee.main(data))
         boton1['state'] = "normal"
         boton2['state'] = "normal"
         boton3['state'] = "normal"
@@ -47,6 +55,34 @@ class Application(tk.Frame):
         self.master.after(100, self.update_status)
 
 
+    @staticmethod
+    def write_remote_xbee_cmmd(self, boton1, boton2, boton3):
+        self.text_params.config(state="normal")
+        # the propper length of the address is 2 bytes, we must
+        address = self.remote_address.get()[:16]
+        if len(address)<16:
+            for n in range (len(address),16):
+                address= "0" + address
+        self.text_params.insert(tk.INSERT,'Trying to access to remote device: ' + address + '\n\n')
+        self.text_params.insert(tk.INSERT, write_remote_params_xbee.main(address))
+        boton1['state'] = "normal"
+        boton2['state'] = "normal"
+        boton3['state'] = "normal"
+        self.text_params.config(state=tk.DISABLED)
+
+    def write_remote_xbee(self):
+        self.text_params.config(state="normal")
+        self.text_params.delete('1.0', tk.END)
+        self.read_local_conf['state'] = tk.DISABLED
+        self.read_remote_conf['state'] = tk.DISABLED
+        self.clear_params['state'] = tk.DISABLED
+        self.text_params.insert(tk.INSERT, " \nWriting remote node... \n\n")
+        self.text_params.config(state=tk.DISABLED)
+        threading.Thread(target=self.write_remote_xbee_cmmd,
+                         args=(self, self.read_local_conf, self.read_remote_conf, self.clear_params,)).start()
+        #self.master.after(100, self.update_status)
+
+
 
     def read_local_xbee(self):
         self.text_params.config(state="normal")
@@ -63,7 +99,7 @@ class Application(tk.Frame):
     @staticmethod
     def read_local_xbee_cmmd(self, boton1, boton2, boton3):
         self.text_params.config(state="normal")
-        self.text_params.insert(tk.INSERT, ReadLocalParams_XBee.main())
+        self.text_params.insert(tk.INSERT, read_local_params_xbee.main())
         boton1['state'] = "normal"
         boton2['state'] = "normal"
         boton3['state'] = "normal"
@@ -153,8 +189,8 @@ class Application(tk.Frame):
         right_pane.add(right_upperframe, width=600, heigh=500)
         right_bottomframe = ttk.Frame(right_pane, relief='groove', borderwidth=2)
         right_bottomframe.grid(column=0, row=1, sticky=(tk.N, tk.W, tk.E, tk.S))
-        right_bottomframe.columnconfigure(1, weight=1)
-        right_bottomframe.rowconfigure(1, weight=1)
+        right_bottomframe.columnconfigure(0, weight=1)
+        right_bottomframe.rowconfigure(0, weight=1)
         right_pane.add(right_bottomframe)
 
         # buttons
@@ -172,17 +208,33 @@ class Application(tk.Frame):
         self.read_local_conf = tk.Button(right_bottomframe)
         self.read_local_conf["text"] = "Read local conf."
         self.read_local_conf["command"] = self.read_local_xbee
-        self.read_local_conf.grid(column=0, row=0, sticky=(tk.W, tk.S, tk.E, tk.N))
+        self.read_local_conf.grid(column=2, row=1, sticky=(tk.W, tk.S, tk.E, tk.N))
+        # write local configuration
+        self.write_local_conf = tk.Button(right_bottomframe)
+        self.write_local_conf["text"] = "Write local conf."
+        #self.write_local_conf["command"] = self.write_remote_xbee
+        self.write_local_conf.grid(column=3, row=1, sticky=(tk.W, tk.S, tk.E, tk.N))
+
         # read remote configuration
         self.read_remote_conf = tk.Button(right_bottomframe)
         self.read_remote_conf["text"] = "Read remote conf."
         self.read_remote_conf["command"] = self.read_remote_xbee
-        self.read_remote_conf.grid(column=4, row=0, sticky=(tk.W, tk.S, tk.E, tk.N))
+        self.read_remote_conf.grid(column=2, row=0, sticky=(tk.W, tk.S, tk.E, tk.N))
+        # write remote configuration
+        self.write_remote_conf = tk.Button(right_bottomframe)
+        self.write_remote_conf["text"] = "Write remote conf."
+        self.write_remote_conf["command"] = self.write_remote_xbee
+        self.write_remote_conf.grid(column=3, row=0, sticky=(tk.W, tk.S, tk.E, tk.N))
         # clear params
         self.clear_params = tk.Button(right_bottomframe)
         self.clear_params["text"] = "Clear"
-        self.clear_params["command"] = self.clear_readed_params # self.UpdateDiscoveringState
-        self.clear_params.grid(column=0, row=1, sticky=(tk.W, tk.S, tk.E, tk.N))
+        self.clear_params["command"] = self.clear_readed_params
+        self.clear_params.grid(column=4, row=0, sticky=(tk.W, tk.S, tk.E, tk.N))
+        # open file
+        self.open_file = tk.Button(right_bottomframe)
+        self.open_file["text"] = "Open config file"
+        self.open_file["command"] = self.open_config_file
+        self.open_file.grid(column=4, row=1, sticky=(tk.W, tk.S, tk.E, tk.N))
 
         # text
         # Discovering status text
@@ -212,10 +264,10 @@ class Application(tk.Frame):
         self.lbladdress = tk.Label(right_bottomframe)
         self.lbladdress['text']="Remote Address: "
         #self.lbladdress.config(0,weight=1)
-        self.lbladdress.grid(column=2, row=0,sticky=(tk.N, tk.W, tk.E, tk.S))
+        self.lbladdress.grid(column=0, row=0,sticky=(tk.N, tk.W, tk.E, tk.S))
         self.remote_address = tk.Entry(right_bottomframe)
         #self.address.config(0,weight=3)
-        self.remote_address.grid(column=3, row=0,sticky=(tk.N, tk.W, tk.E, tk.S))
+        self.remote_address.grid(column=1, row=0,sticky=(tk.N, tk.W, tk.E, tk.S))
 
 
 
