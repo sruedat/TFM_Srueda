@@ -4,6 +4,8 @@ import threading
 import queue
 import time
 import DiscoverDevices_XBee
+import ReadLocalParams_XBee
+import ReadRemoteParams_XBee
 
 
 class Application(tk.Frame):
@@ -17,7 +19,62 @@ class Application(tk.Frame):
         self.queue = queue.Queue()
         self.create_widgets()
 
+    @staticmethod
+    def read_remote_xbee_cmmd(self, boton1, boton2, boton3):
+        self.text_params.config(state="normal")
+        # the propper length of the address is 2 bytes, we must
+        data = self.remote_address.get()[:16]
+        if len(data)<16:
+            for n in range (len(data),16):
+                data= "0" + data
+        self.text_params.insert(tk.INSERT,'Trying to access to remote device: ' + data + '\n\n')
+        self.text_params.insert(tk.INSERT, ReadRemoteParams_XBee.main(data))
+        boton1['state'] = "normal"
+        boton2['state'] = "normal"
+        boton3['state'] = "normal"
+        self.text_params.config(state=tk.DISABLED)
 
+    def read_remote_xbee(self):
+        self.text_params.config(state="normal")
+        self.text_params.delete('1.0', tk.END)
+        self.read_local_conf['state'] = tk.DISABLED
+        self.read_remote_conf['state'] = tk.DISABLED
+        self.clear_params['state'] = tk.DISABLED
+        self.text_params.insert(tk.INSERT, " \nReading remote node... \n\n")
+        self.text_params.config(state=tk.DISABLED)
+        threading.Thread(target=self.read_remote_xbee_cmmd,
+                         args=(self, self.read_local_conf, self.read_remote_conf, self.clear_params)).start()
+        self.master.after(100, self.update_status)
+
+
+
+    def read_local_xbee(self):
+        self.text_params.config(state="normal")
+        self.text_params.delete('1.0', tk.END)
+        self.read_local_conf['state'] = tk.DISABLED
+        self.read_remote_conf['state'] = tk.DISABLED
+        self.clear_params['state'] = tk.DISABLED
+        self.text_params.insert(tk.INSERT, " \nReading local node... \n\n")
+        self.text_params.config(state=tk.DISABLED)
+        threading.Thread(target=self.read_local_xbee_cmmd, args=(self,self.read_local_conf, self.read_remote_conf,self.clear_params)).start()
+        self.master.after(100, self.update_status)
+
+
+    @staticmethod
+    def read_local_xbee_cmmd(self, boton1, boton2, boton3):
+        self.text_params.config(state="normal")
+        self.text_params.insert(tk.INSERT, ReadLocalParams_XBee.main())
+        boton1['state'] = "normal"
+        boton2['state'] = "normal"
+        boton3['state'] = "normal"
+        self.text_params.config(state=tk.DISABLED)
+
+    def clear_readed_params(self):
+        self.text_params.config(state="normal")
+        self.text_params.delete('1.0', tk.END)
+        self.text_params.insert(tk.INSERT, '\n Please press "Read local conf." to read local node params\n'
+                                           ' or put address and press "Read remote conf." to read remote node params')
+        self.text_params.config(state=tk.DISABLED)
 
     @staticmethod
     def update_discover_log(self,cola,boton1,boton2):
@@ -35,17 +92,17 @@ class Application(tk.Frame):
 
 
 
-    def clear_status(self):
-        self.texto.config(state="normal")
-        self.texto.delete('1.0', tk.END)
-        self.texto.insert(tk.INSERT, "\nPress ""Search Nodes"" to find remote XBees \n")
-        self.texto.config(state=tk.DISABLED)
+    def clear_discovered_nodes(self):
+        self.text_discover.config(state="normal")
+        self.text_discover.delete('1.0', tk.END)
+        self.text_discover.insert(tk.INSERT, '\nPress "Search Nodes" to find remote XBees \n')
+        self.text_discover.config(state=tk.DISABLED)
 
 
 
     def update_status(self):
         self.discover_status = 0
-        self.texto.delete('1.0', tk.END)
+        self.text_discover.delete('1.0', tk.END)
         self.clear_discover['state']=tk.DISABLED
         threading.Thread(target=self.search).start()
         threading.Thread(target=self.update_discover_log,
@@ -56,10 +113,10 @@ class Application(tk.Frame):
     def process_queue(self):
         try:
             data = self.queue.get_nowait()
-            self.texto.config(state="normal")
-            self.texto.delete('1.0', tk.END)
-            self.texto.insert(tk.INSERT,data)
-            self.texto.config(state=tk.DISABLED)
+            self.text_discover.config(state="normal")
+            self.text_discover.delete('1.0', tk.END)
+            self.text_discover.insert(tk.INSERT,data)
+            self.text_discover.config(state=tk.DISABLED)
         except queue.Empty:
             pass
         self.master.after(100, self.process_queue)
@@ -70,8 +127,8 @@ class Application(tk.Frame):
         # lef pane
         left_pane = tk.PanedWindow(root, orient=tk.VERTICAL)
         left_pane.grid(column=0, row=0, rowspan=2, sticky=(tk.N, tk.W, tk.E, tk.S))
-        left_pane.rowconfigure(0, weight=1)
-        left_pane.columnconfigure(0, weight=1)
+        #left_pane.rowconfigure(0, weight=1)
+        #left_pane.columnconfigure(0, weight=1)
         left_upperframe = ttk.Frame(root, relief='groove', borderwidth=2)
         left_upperframe.grid(column=0, row=0, sticky=(tk.N, tk.W, tk.E, tk.S))
         left_upperframe.columnconfigure(0, weight=1)
@@ -87,40 +144,79 @@ class Application(tk.Frame):
         # right pane
         right_pane = tk.PanedWindow(root, orient=tk.VERTICAL)
         right_pane.grid(column=1, row=0, rowspan=2, sticky=(tk.N, tk.W, tk.E, tk.S))
-        right_pane.rowconfigure(0, weight=1)
-        right_pane.columnconfigure(0, weight=1)
+        #right_pane.rowconfigure(0, weight=1)
+        #right_pane.columnconfigure(0, weight=1)
         right_upperframe = ttk.Frame(root, relief='groove', borderwidth=2)
-        right_upperframe.grid(column=1, row=0, sticky=(tk.N, tk.W, tk.E, tk.S))
-        right_upperframe.columnconfigure(0, weight=1)
-        right_upperframe.rowconfigure(0, weight=1)
+        right_upperframe.grid(column=0, row=0, sticky=(tk.N, tk.W, tk.E, tk.S))
+        #right_upperframe.columnconfigure(0, weight=1)
+        right_upperframe.rowconfigure(0, weight=3)
         right_pane.add(right_upperframe, width=600, heigh=500)
         right_bottomframe = ttk.Frame(right_pane, relief='groove', borderwidth=2)
-        right_bottomframe.grid(column=1, row=1, sticky=(tk.N, tk.W, tk.E, tk.S))
-        right_bottomframe.columnconfigure(0, weight=1)
-        right_bottomframe.rowconfigure(0, weight=1)
+        right_bottomframe.grid(column=0, row=1, sticky=(tk.N, tk.W, tk.E, tk.S))
+        right_bottomframe.columnconfigure(1, weight=1)
+        right_bottomframe.rowconfigure(1, weight=1)
         right_pane.add(right_bottomframe)
 
         # buttons
+        #discover
         self.discover = tk.Button(left_bottomframe)
         self.discover["text"] = "Search Nodes"
         self.discover["command"] = self.update_status
         self.discover.grid(column=0, row=0, sticky=(tk.W, tk.S, tk.E, tk.N))
+        #clear discover
         self.clear_discover = tk.Button(left_bottomframe)
         self.clear_discover["text"] = "Clear"
-        self.clear_discover["command"] = self.clear_status  # self.UpdateDiscoveringState
+        self.clear_discover["command"] = self.clear_discovered_nodes  # self.UpdateDiscoveringState
         self.clear_discover.grid(column=1, row=0, sticky=(tk.W, tk.S, tk.E, tk.N))
+        #read local configuration
+        self.read_local_conf = tk.Button(right_bottomframe)
+        self.read_local_conf["text"] = "Read local conf."
+        self.read_local_conf["command"] = self.read_local_xbee
+        self.read_local_conf.grid(column=0, row=0, sticky=(tk.W, tk.S, tk.E, tk.N))
+        # read remote configuration
+        self.read_remote_conf = tk.Button(right_bottomframe)
+        self.read_remote_conf["text"] = "Read remote conf."
+        self.read_remote_conf["command"] = self.read_remote_xbee
+        self.read_remote_conf.grid(column=4, row=0, sticky=(tk.W, tk.S, tk.E, tk.N))
+        # clear params
+        self.clear_params = tk.Button(right_bottomframe)
+        self.clear_params["text"] = "Clear"
+        self.clear_params["command"] = self.clear_readed_params # self.UpdateDiscoveringState
+        self.clear_params.grid(column=0, row=1, sticky=(tk.W, tk.S, tk.E, tk.N))
 
+        # text
         # Discovering status text
-        self.texto = tk.Text(left_upperframe, borderwidth=3, relief="sunken", bg="lavender")
-        self.texto.config (font=("consolas", 10), undo=True, wrap ='word')
-        self.texto.config(state="normal")
-        self.texto.insert(tk.INSERT, "\nPress ""Search Nodes"" to find remote XBees \n")
-        self.texto.config(state=tk.DISABLED)
-        self.texto.grid(row=0, column=0, sticky=(tk.W, tk.S, tk.E, tk.N))
-
-        yscrollbar = tk.Scrollbar(left_upperframe, command=self.texto.yview)
+        self.text_discover = tk.Text(left_upperframe, borderwidth=3, relief="sunken", bg="lavender")
+        self.text_discover.config (font=("consolas", 10), undo=True, wrap ='word')
+        self.text_discover.config(state="normal")
+        self.text_discover.insert(tk.INSERT, '\nPress "Search Nodes" to find remote XBees \n')
+        self.text_discover.config(state=tk.DISABLED)
+        self.text_discover.grid(row=0, column=0, sticky=(tk.W, tk.S, tk.E, tk.N))
+        yscrollbar = tk.Scrollbar(left_upperframe, command=self.text_discover.yview)
         yscrollbar.grid(row=0, column=1, sticky=tk.N + tk.S)
-        self.texto['yscrollcommand'] = yscrollbar.set
+        self.text_discover['yscrollcommand'] = yscrollbar.set
+
+        # Xbee params text
+        self.text_params = tk.Text(right_upperframe, borderwidth=3, relief="sunken", bg="lavender")
+        self.text_params.config(font=("consolas", 10), undo=True, wrap='word')
+        self.text_params.config(state="normal")
+        self.text_params.insert(tk.INSERT, '\n Please press "Read local conf." to read local node params\n'
+                                             ' or put address and press "Read remote conf." to read remote node params')
+        self.text_params.config(state=tk.DISABLED)
+        self.text_params.grid(row=0, column=0, sticky=(tk.W, tk.S, tk.E, tk.N))
+        yscrollbar = tk.Scrollbar(right_upperframe, command=self.text_params.yview)
+        yscrollbar.grid(row=0, column=1, sticky=tk.N + tk.S)
+        self.text_params['yscrollcommand'] = yscrollbar.set
+
+        # Entry address text
+        self.lbladdress = tk.Label(right_bottomframe)
+        self.lbladdress['text']="Remote Address: "
+        #self.lbladdress.config(0,weight=1)
+        self.lbladdress.grid(column=2, row=0,sticky=(tk.N, tk.W, tk.E, tk.S))
+        self.remote_address = tk.Entry(right_bottomframe)
+        #self.address.config(0,weight=3)
+        self.remote_address.grid(column=3, row=0,sticky=(tk.N, tk.W, tk.E, tk.S))
+
 
 
 if __name__ == "__main__":

@@ -141,14 +141,147 @@ def main():
         Vplus = utils.hex_to_string(local_device.get_parameter("V+"))
 
         #print parameters
-        print(" +-----------------------------+")
-        print(" | Networking                  |")
+        log= " +-----------------------------+\n"
+        log= log + " | Networking                  |\n"
+        log = log + " +-----------------------------+\n"
+        log = log + " PAN ID:                      %s" % ID + "\n"
+        log = log + " Scan Channel:                %s" % SC + "\n"
+        log = log + " Scan Duration:               %s" % SD + "\n"
+        log = log + " Network Watchdog Timeout:    %s" % NW + "\n"
+        log = log + " Channel Verification:        %s" % JV + "\n"
+        log = log + " Join Notification:           %s" % JN + "\n"
+        log = log + " Operating PAN ID:            %s" % OP + "\n"
+        log = log + " Operating 16-bit PAN ID:     %s" % OI + "\n"
+        log = log + " Operating Channel:           %s" % CH + "\n"
+        log = log + " Number of Remaining Children:%s" % NC + "\n"
+        log = log + " Coordinator Enable:          %s" % CE + "\n"
+        log = log + " Device Options:              %s" % DO + "\n"
+        log = log + " Device Controls:             %s" % DC + "\n\n"
+
+        log = log + " +-----------------------------+\n"
+        log = log + " | Addressing                  |\n"
+        log = log + " +-----------------------------+\n"
+        log = log + " Serial Number High:          %s" % SH + "\n"
+        log = log + " Serial Number Low:           %s" % SL + "\n"
+        log = log + " 16-bit Network Address:      %s" % MY + "\n"
+        log = log + " 16-bit Parent Address:       %s" % MP + "\n"
+        log = log + " Destination Address High:    %s" % DH + "\n"
+        log = log + " Destination Address Low:     %s" % DL + "\n"
+        log = log + " Node Identifier:             %s" % NI + "\n"
+        log = log + " Maximum Hops:                %s" % NH + "\n"
+        log = log + " Broadcast Radius:            %s" % BH + "\n"
+        log = log + " Many-to-One Route Bro. Time: %s" % AR + "\n"
+        log = log + " Device Type Identifier:      %s" % DD + "\n"
+        log = log + " Node Discovery Backoff:      %s" % NT + "\n"
+        log = log + " Node Discovery Options:      %s" % NO + "\n"
+        log = log + " Maximum Num.Trans. Bytes:    %s" % NP + "\n"
+        log = log + " PAN Conflict Threshold:      %s" % CR + "\n\n"
+
+        log = log + " +-----------------------------+\n"
+        log = log + " | ZigBee Addressing           |\n"
+        log = log + " +-----------------------------+\n"
+        log = log + " Zigbee Source Endpoint:      %s" % SE + "\n"
+        log = log + " Zigbee Destination Endpoint: %s" % DE + "\n"
+        log = log + " Zigbee Cluster ID:           %s" % CI + "\n"
+        log = log + " Transmit Options:            %s" % TO + "\n\n"
+
+        log = log + " +-----------------------------+\n"
+        log = log + " | RF Interfacing              |\n"
+        log = log + " +-----------------------------+\n"
+        log = log + " Tx Power Level:              %s" % PL + "\n"
+        log = log + " Power Mode:                  %s" % PM + "\n"
+        log = log + " Power at PL4:                %s" % PP + "\n\n"
+
+        log = log + " +-----------------------------+\n"
+        log = log + " | Security                    |\n"
+        log = log + " +-----------------------------+\n"
+        log = log + " Encryption Enable:           %s" % EE + "\n"
+        log = log + " Encryption Options:          %s" % EO + "\n"
+        log = log + " Encryption Key:              %s" % KY + "\n"
+        log = log + " Network Encryption Key:      %s" % NK + "\n\n"
+
+        log = log + " +-----------------------------+\n"
+        log = log + " | Serial Interfacing          |\n"
+        log = log + " +-----------------------------+\n"
+        log = log + " Baud Rate:                   %s" % BD + "\n"
+        log = log + " Parity:                      %s" % NB + "\n"
+        log = log + " Stop Bits:                   %s" % SB + "\n"
+        log = log + " Packetization Timeout:       %s" % RO + "\n"
+        log = log + " DIO6/nRTS Configuration  :   %s" % D6 + "\n"
+        log = log + " DIO7/nCTS Configuration:     %s" % D7 + "\n"
+        log = log + " API Enable:                  %s" % AP + "\n"
+        log = log + " API Output Mode:             %s" % AO + "\n\n"
+
+        log = log + " +-----------------------------+\n"
+        log = log + " | AT Command Options          |\n"
+        log = log + " +-----------------------------+\n"
+        log = log + " AT Command Mode Timeout:     %s" % CT + "\n"
+        log = log + " Guard Times:                 %s" % GT + "\n"
+        log = log + " Command Sequence Character:  %s" % CC + "\n\n"
+
+        log = log + " +-----------------------------+\n"
+        log = log + " | Sleep Modes                 |\n"
+        log = log + " +-----------------------------+\n"
+        log = log + " Cyclic Sleep Period:         %s" % SP + "\n"
+        log = log + " Number of Cyclic Sleep Per.: %s" % SN + "\n"
+        log = log + " Sleep Mode:                  %s" % SM + "\n"
+        log = log + " Time Before Sleep:sss        %s" % ST + "\n"
+        log = log + " Sleep Options:               %s" % SO + "\n"
+        log = log + " Wake Hosts:                  %s" % WH + "\n"
+        log = log + " Poll Rate:                   %s" % PO + "\n\n"
+
+        log = log + " +-----------------------------+\n"
+        log = log + " | I/O Settings                |\n"
+        log = log + " +-----------------------------+\n"
+        log = log + " DIO0/ADO/CB Configuration:   %s" % D0 + "\n"
+        log = log + " DIO1/AD1 Configuration:      %s" % D1 + "\n"
+        log = log + " DIO2/AD2 Configuration:      %s" % D2 + "\n"
+        log = log + " DIO3/AD3 Configuration:      %s" % D3 + "\n"
+        log = log + " DIO4 Configuration:          %s" % D4 + "\n"
+        log = log + " DIO5 Configuration:          %s" % D5 + "\n"
+        log = log + " DIO8 Configuration:          %s" % D8 + "\n"
+        log = log + " DIO9 Configuration:          %s" % D9 + "\n"
+        log = log + " DIO10 Configuration:         %s" % P0 + "\n"
+        log = log + " DIO11 Configuration:         %s" % P1 + "\n"
+        log = log + " DIO12 Configuration:         %s" % P2 + "\n"
+        log = log + " DIO13 Configuration:         %s" % P3 + "\n"
+        log = log + " DIO14 Configuration:         %s" % P4 + "\n"
+        if HV == Hardware_Extended:
+            log = log + " DIO15 Configuration:         %s" % P5 + "\n"
+            log = log + " DIO16 Configuration:         %s" % P6 + "\n"
+            log = log + " DIO17 Configuration:         %s" % P7 + "\n"
+            log = log + " DIO18 Configuration:         %s" % P8 + "\n"
+            log = log + " DIO19 Configuration:         %s" % P9 + "\n"
+        log = log + " Pull-UP Resistor Enable:     %s" % PR + "\n"
+        log = log + " Pull-Up/down Direction:      %s" % PD + "\n"
+        log = log + " Associate LED Blink Time:    %s" % LT + "\n"
+        log = log + " RSSI PWM Timer:              %s" % RP + "\n\n"
+
+        log = log + " +-----------------------------+\n"
+        log = log + " | I/O Sampling                |\n"
+        log = log + " +-----------------------------+\n"
+        log = log + " IO Sampling Rate:            %s" % IR + "\n"
+        log = log + " Digital IO Change Detection: %s" % IC + "\n"
+        log = log + " Supply Votage High Thres.:   %s" % Vplus + "\n\n"
+
+        log = log + " +-----------------------------+\n"
+        log = log + " | Diagnostic Commands         |\n"
+        log = log + " +-----------------------------+\n"
+        log = log + " Firmaware Version:           %s" % VR + "\n"
+        log = log + " Hardware Version:            %s" % HV + "\n"
+        log = log + " Association Indication:      %s" % AI + "\n"
+        log = log + " RSSI of Last Packet:         %s" % DB + "\n"
+        log = log + " Supply Votage:               %s" % V + "\n\n"
+
+        '''
+        #print(" +-----------------------------+")
+        #print(" | Networking                  |")
+        print(" ZigBee Stack Profile:        %s" % ZS)
+        print(" Node Join Time:              %s" % NJ)
         print(" +-----------------------------+")
         print(" PAN ID:                      %s" % ID)
         print(" Scan Channel:                %s" % SC)
         print(" Scan Duration:               %s" % SD)
-        print(" ZigBee Stack Profile:        %s" % ZS)
-        print(" Node Join Time:              %s" % NJ)
         print(" Network Watchdog Timeout:    %s" % NW)
         print(" Channel Verification:        %s" % JV)
         print(" Join Notification:           %s" % JN)
@@ -274,7 +407,7 @@ def main():
         print(" Association Indication:      %s" % AI)
         print(" RSSI of Last Packet:         %s" % DB)
         print(" Supply Votage:               %s" % V + "\n")
-
+'''
     except:
         if local_device.is_open():
             local_device.close()
@@ -285,6 +418,7 @@ def main():
         if local_device is not None and local_device.is_open():
             local_device.close()
 
+    return log
 
 if __name__ == '__main__':
     main()
