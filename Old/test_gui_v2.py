@@ -1,7 +1,7 @@
 from tkinter import *
 from tkinter import ttk
 
-import DiscoverDevices_XBee
+import discover_devices_xbee
 
 root = Tk()
 
@@ -64,11 +64,11 @@ lbl = Label(entry, text="Node Address:")
 lbl.grid(sticky=W, pady=4, padx=5)
 
 # Botones
-discover = ttk.Button(left_bottomframe,text="Discover Network", command=DiscoverDevices_XBee)
+discover = ttk.Button(left_bottomframe, text="Discover Network", command=discover_devices_xbee)
 discover.grid(column=0, row=0, sticky=(W,S,E,N))
-if DiscoverDevices_XBee.state == 0:
+if discover_devices_xbee.state == 0:
     texto = "Press 'Discover Network' button to find devices \n"
-elif DiscoverDevices_XBee.state == 1:
+elif discover_devices_xbee.state == 1:
     texto = "Discovering remote XBee devices..."
 
 discoverlab =Label (left_upperframe, text = texto)

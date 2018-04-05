@@ -18,7 +18,7 @@ import configparser
 config_file = "config/sys_config.ini"
 
 settings = configparser.ConfigParser()
-settings.read (config_file)
+#settings.read (config_file)
 
 
 
@@ -32,6 +32,7 @@ def set_path_to_file(path):
 # Obtenemos del fichero de configuración los valores para cada parámetro
 # Networking
 def ReadPanIDFromFile(Address):
+
     return settings.get(Address, "ID")
 
 

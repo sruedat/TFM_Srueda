@@ -137,10 +137,10 @@ def main(Node_Address):
         remote_device.set_parameter("V+", utils.hex_string_to_bytes(read_node_config_file.ReadSupplyVoltageHihgThresholdFromFile(Node_Address)))
 
         # Make params permanent
-        local_device.write_changes()  # make changes permanet"""
+        remote_device.write_changes()  # make changes permanet"""
 
         # print parameters
-        log ="  Success!! All Parameters Were Written  \n"
+        log ="  Success!! All Parameters Were Written  \n\n"
         print("  Success!! All Parameters Were Written  ")
 
 

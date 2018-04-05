@@ -3,12 +3,14 @@ from tkinter import ttk
 import threading
 import queue
 import time
-import DiscoverDevices_XBee
+import discover_devices_xbee
 import read_local_params_xbee
 import read_remote_params_xbee
 import write_remote_params_xbee
+import write_local_params_xbee
 import os
-
+import platform
+import subprocess
 
 class Application(tk.Frame):
     def __init__(self, master=None):
@@ -23,36 +25,59 @@ class Application(tk.Frame):
 
 
     def open_config_file(self):
-        dirname= os.path.dirname(__file__)+ "/config/sys_config.ini"
-        print (dirname)
-        os.startfile(dirname)
+        dirname= os.path.dirname(__file__)+ "/config"
+        if platform.system() == "Windows":
+            os.startfile(dirname)
+        elif platform.system() == "Darwin":
+            subprocess.Popen(["open", dirname])
+        else:
+            subprocess.Popen(["xdg-open", dirname])
+
+    def enable_all_bottons(self):
+        self.discover['state'] = "normal"
+        self.clear_discover['state'] = "normal"
+        self.read_local_conf['state'] = "normal"
+        self.write_local_conf['state'] = "normal"
+        self.read_remote_conf['state'] = "normal"
+        self.write_remote_conf['state'] = "normal"
+        self.clear_params['state'] = "normal"
+        self.open_file['state'] = "normal"
+
+
+    def disable_all_bottons(self):
+        self.discover['state']=tk.DISABLED
+        self.clear_discover['state']=tk.DISABLED
+        self.read_local_conf['state']=tk.DISABLED
+        self.write_local_conf['state']=tk.DISABLED
+        self.read_remote_conf['state']=tk.DISABLED
+        self.write_remote_conf['state']=tk.DISABLED
+        self.clear_params['state']=tk.DISABLED
+        self.open_file['state']=tk.DISABLED
 
     @staticmethod
-    def read_remote_xbee_cmmd(self, boton1, boton2, boton3):
-        self.text_params.config(state="normal")
+    def read_remote_xbee_cmmd(self):
         # the propper length of the address is 2 bytes, we must
         data = self.remote_address.get()[:16]
         if len(data)<16:
             for n in range (len(data),16):
                 data= "0" + data
+        self.text_params.config(state="normal")
         self.text_params.insert(tk.INSERT,'Trying to access to remote device: ' + data + '\n\n')
         self.text_params.insert(tk.INSERT, read_remote_params_xbee.main(data))
-        boton1['state'] = "normal"
-        boton2['state'] = "normal"
-        boton3['state'] = "normal"
         self.text_params.config(state=tk.DISABLED)
+        self.enable_all_bottons()
+
 
     def read_remote_xbee(self):
         self.text_params.config(state="normal")
         self.text_params.delete('1.0', tk.END)
-        self.read_local_conf['state'] = tk.DISABLED
-        self.read_remote_conf['state'] = tk.DISABLED
-        self.clear_params['state'] = tk.DISABLED
         self.text_params.insert(tk.INSERT, " \nReading remote node... \n\n")
         self.text_params.config(state=tk.DISABLED)
+        self.disable_all_bottons()
         threading.Thread(target=self.read_remote_xbee_cmmd,
-                         args=(self, self.read_local_conf, self.read_remote_conf, self.clear_params)).start()
-        self.master.after(100, self.update_status)
+                         args=(self, )).start()
+        #self.master.after(100, self.update_status)
+
 
 
     @staticmethod
@@ -65,45 +90,58 @@ class Application(tk.Frame):
                 address= "0" + address
         self.text_params.insert(tk.INSERT,'Trying to access to remote device: ' + address + '\n\n')
         self.text_params.insert(tk.INSERT, write_remote_params_xbee.main(address))
-        boton1['state'] = "normal"
-        boton2['state'] = "normal"
-        boton3['state'] = "normal"
         self.text_params.config(state=tk.DISABLED)
+        self.enable_all_bottons()
 
     def write_remote_xbee(self):
         self.text_params.config(state="normal")
         self.text_params.delete('1.0', tk.END)
-        self.read_local_conf['state'] = tk.DISABLED
-        self.read_remote_conf['state'] = tk.DISABLED
-        self.clear_params['state'] = tk.DISABLED
         self.text_params.insert(tk.INSERT, " \nWriting remote node... \n\n")
         self.text_params.config(state=tk.DISABLED)
+        self.disable_all_bottons()
         threading.Thread(target=self.write_remote_xbee_cmmd,
                          args=(self, self.read_local_conf, self.read_remote_conf, self.clear_params,)).start()
-        #self.master.after(100, self.update_status)
+
 
 
 
     def read_local_xbee(self):
         self.text_params.config(state="normal")
         self.text_params.delete('1.0', tk.END)
-        self.read_local_conf['state'] = tk.DISABLED
-        self.read_remote_conf['state'] = tk.DISABLED
-        self.clear_params['state'] = tk.DISABLED
         self.text_params.insert(tk.INSERT, " \nReading local node... \n\n")
         self.text_params.config(state=tk.DISABLED)
-        threading.Thread(target=self.read_local_xbee_cmmd, args=(self,self.read_local_conf, self.read_remote_conf,self.clear_params)).start()
-        self.master.after(100, self.update_status)
+        self.disable_all_bottons()
+        threading.Thread(target=self.read_local_xbee_cmmd, args=(self,)).start()
+        #self.master.after(100, self.update_status)
 
 
     @staticmethod
-    def read_local_xbee_cmmd(self, boton1, boton2, boton3):
+    def read_local_xbee_cmmd(self):
         self.text_params.config(state="normal")
         self.text_params.insert(tk.INSERT, read_local_params_xbee.main())
-        boton1['state'] = "normal"
-        boton2['state'] = "normal"
-        boton3['state'] = "normal"
         self.text_params.config(state=tk.DISABLED)
+        self.enable_all_bottons()
+
+    def write_local_xbee(self):
+        self.text_params.config(state="normal")
+        self.text_params.delete('1.0', tk.END)
+        self.text_params.insert(tk.INSERT, " \nWriting local node... \n\n")
+        self.text_params.config(state=tk.DISABLED)
+        self.disable_all_bottons()
+        threading.Thread(target=self.write_local_xbee_cmmd,
+                             args=(self, )).start()
+
+
+    @staticmethod
+    def write_local_xbee_cmmd(self):
+        self.text_params.config(state="normal")
+        # the propper length of the address is 2 bytes, we must
+        address = "local_node"
+        self.text_params.insert(tk.INSERT, 'Trying to access to local device: ' + address + '\n\n')
+        self.text_params.insert(tk.INSERT, write_local_params_xbee.main(address))
+        self.text_params.config(state=tk.DISABLED)
+        self.enable_all_bottons()
+
 
     def clear_readed_params(self):
         self.text_params.config(state="normal")
@@ -113,18 +151,17 @@ class Application(tk.Frame):
         self.text_params.config(state=tk.DISABLED)
 
     @staticmethod
-    def update_discover_log(self,cola,boton1,boton2):
-        boton2['state']=tk.DISABLED
+    def update_discover_log(self,cola):
+        self.disable_all_bottons()
         while self.discover_status != 1:
-            cola.put(DiscoverDevices_XBee.passlog())
+            cola.put(discover_devices_xbee.passlog())
             time.sleep(0.1)
-        boton1['state'] = "normal"
-        boton2['state'] = "normal"
 
 
 
     def search(self):
-        self.discover_status=DiscoverDevices_XBee.main()
+        self.discover_status=discover_devices_xbee.main()
+        self.enable_all_bottons()
 
 
 
@@ -140,10 +177,12 @@ class Application(tk.Frame):
         self.discover_status = 0
         self.text_discover.delete('1.0', tk.END)
         self.clear_discover['state']=tk.DISABLED
+        self.after(100, self.process_queue)
         threading.Thread(target=self.search).start()
         threading.Thread(target=self.update_discover_log,
-                         args=(self, self.queue, self.clear_discover, self.discover,)).start()
-        self.after(100, self.process_queue)
+                         args=(self, self.queue,)).start()
+
+
 
 
     def process_queue(self):
@@ -152,7 +191,8 @@ class Application(tk.Frame):
             self.text_discover.config(state="normal")
             self.text_discover.delete('1.0', tk.END)
             self.text_discover.insert(tk.INSERT,data)
-            self.text_discover.config(state=tk.DISABLED)
+            #self.text_discover.config(state=tk.DISABLED)
+            #self.disable_all_bottons()
         except queue.Empty:
             pass
         self.master.after(100, self.process_queue)
@@ -212,7 +252,7 @@ class Application(tk.Frame):
         # write local configuration
         self.write_local_conf = tk.Button(right_bottomframe)
         self.write_local_conf["text"] = "Write local conf."
-        #self.write_local_conf["command"] = self.write_remote_xbee
+        self.write_local_conf["command"] = self.write_local_xbee
         self.write_local_conf.grid(column=3, row=1, sticky=(tk.W, tk.S, tk.E, tk.N))
 
         # read remote configuration
@@ -232,7 +272,7 @@ class Application(tk.Frame):
         self.clear_params.grid(column=4, row=0, sticky=(tk.W, tk.S, tk.E, tk.N))
         # open file
         self.open_file = tk.Button(right_bottomframe)
-        self.open_file["text"] = "Open config file"
+        self.open_file["text"] = "Open config files"
         self.open_file["command"] = self.open_config_file
         self.open_file.grid(column=4, row=1, sticky=(tk.W, tk.S, tk.E, tk.N))
 

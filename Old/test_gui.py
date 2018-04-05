@@ -1,7 +1,7 @@
 from tkinter import *
 from tkinter import ttk
 import time
-import DiscoverDevices_XBee
+import discover_devices_xbee
 
 Texto = "Press ' Discover Nodes' button to find remote devices \n"
 

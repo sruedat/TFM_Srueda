@@ -23,12 +23,15 @@ sys.tracebacklimit = 0
 # Parámetros de conexión con el puerto serie al dispositivo local
 PORT=read_sys_config.ReadLocalPortFromFile()
 BAUD_RATE = read_sys_config.ReadLocalBaudRateFromFile()
+node_address="local_node"
 
 
 def main(NodeAddress):
     print(" +-----------------------------------------------+")
     print(" |           Write Local XBee parameters         |")
     print(" +-----------------------------------------------+\n")
+
+
 
     local_device = XBeeDevice(PORT, BAUD_RATE)
 
@@ -42,7 +45,9 @@ def main(NodeAddress):
         read_node_config_file.set_path_to_file(NodeAddress)
 
         # Networking
+
         local_device.set_parameter("ID", utils.hex_string_to_bytes(read_node_config_file.ReadPanIDFromFile(NodeAddress)))
+
         local_device.set_parameter("SC", utils.hex_string_to_bytes(read_node_config_file.ReadScanChannelsFromFile(NodeAddress)))
         local_device.set_parameter("SD", utils.hex_string_to_bytes(read_node_config_file.ReadScanDurationFromFile(NodeAddress)))
         local_device.set_parameter("ZS", utils.hex_string_to_bytes(read_node_config_file.ReadZigBeeStackProfileFromFile(NodeAddress)))
@@ -133,9 +138,10 @@ def main(NodeAddress):
 
         #print parameters
         print("  Success!! All Parameters Were Written  ")
-
+        log = "  Success!! All Parameters Were Written  \n\n"
 
     except:
+        log = "  Sorry, an error has happened during writting operation\n"
         if local_device.is_open():
             local_device.close()
         pass
@@ -145,6 +151,7 @@ def main(NodeAddress):
         if local_device is not None and local_device.is_open():
             local_device.close()
 
+    return log
 
 if __name__ == '__main__':
-    main("0013A20041679E85")
+    main(node_address)
