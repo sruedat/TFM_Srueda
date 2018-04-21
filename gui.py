@@ -1,3 +1,24 @@
+# Sergio Rueda Teruel. 2018
+# Este sofware ha sido desarrollado para el trabajo fin de master de la titulación
+# Máster Unviersitario en Ingeniería de TElecomuniación UOC-URL de la
+# Universisdad Oberta de Catalunya y lleva por título
+# "Diseño de una WSN para la estimación del seein de l cúpla D080,
+# en el Observatorio Astrofísico de Javalambre."
+
+# Para la realización de este código se han utilizado las librerías python
+# que la empresa Digi (Digi International Inc.) proporciona en su página web
+# (https://www.digi.com/blog/xbee/introducing-the-official-digi-xbee-python-library/)
+
+# este código está sometído a licencia de Reconocimiento-NoComercial-CompartirIgual
+# 3.0 España de Creative Commons.
+
+
+
+# Este módulo se utiliza para la creacción de la interface gráfica con la que gestionar
+# toda la red, permite leer la configuración del nodo local, la configuración de nodos
+# remotos indicándo su dirección. Además tambiénpermite escibir la configuración del nodo
+# local y/o remotos mediante sus correspondientes archivos de configuración
+
 import tkinter as tk
 from tkinter import ttk
 import threading
@@ -13,6 +34,7 @@ import platform
 import subprocess
 
 class Application(tk.Frame):
+    # Creación del master frame que alberga todos los componentes
     def __init__(self, master=None):
         tk.Frame.__init__(self, master)
         master.title("SRueda. - Xbee Zigbee Tool")
@@ -23,7 +45,8 @@ class Application(tk.Frame):
         self.queue = queue.Queue()
         self.create_widgets()
 
-
+    # Módulo para abrir el directorio dónde están los arhivos de configuración
+    # funciona para Windows, Mac y GNU-Linux
     def open_config_file(self):
         dirname= os.path.dirname(__file__)+ "/config"
         if platform.system() == "Windows":
@@ -33,6 +56,7 @@ class Application(tk.Frame):
         else:
             subprocess.Popen(["xdg-open", dirname])
 
+    # Módulo para habilitar todos los botones de la apliación
     def enable_all_bottons(self):
         self.discover['state'] = "normal"
         self.clear_discover['state'] = "normal"
@@ -43,7 +67,7 @@ class Application(tk.Frame):
         self.clear_params['state'] = "normal"
         self.open_file['state'] = "normal"
 
-
+    # Módulo para deshabilitar todos los botones de la aplicación
     def disable_all_bottons(self):
         self.discover['state']=tk.DISABLED
         self.clear_discover['state']=tk.DISABLED
@@ -54,30 +78,36 @@ class Application(tk.Frame):
         self.clear_params['state']=tk.DISABLED
         self.open_file['state']=tk.DISABLED
 
+    # Esta función llama al módulo que realiza la escritura el módulo remoto
     @staticmethod
     def read_remote_xbee_cmmd(self):
-        # the propper length of the address is 2 bytes, we must
+        # Comprobamos que la dirección del nodo introducida tenga una longitud
+        # de 16 caracteres, si no es así, se completa con ceros a la izquierda
         data = self.remote_address.get()[:16]
         if len(data)<16:
             for n in range (len(data),16):
                 data= "0" + data
+        # Indicamos en el panel de texto que se va a intentar acceder al nodo remoto
         self.text_params.config(state="normal")
         self.text_params.insert(tk.INSERT,'Trying to access to remote device: ' + data + '\n\n')
+        # Se llama al módulo para la lectura de parámetros del nodo remoto pasándole la dirección
         self.text_params.insert(tk.INSERT, read_remote_params_xbee.main(data))
         self.text_params.config(state=tk.DISABLED)
         self.enable_all_bottons()
 
 
     def read_remote_xbee(self):
+        # Indicamos en el panel de texto que se va a lanzar la lectura del nodo remoto
         self.text_params.config(state="normal")
         self.text_params.delete('1.0', tk.END)
         self.text_params.insert(tk.INSERT, " \nReading remote node... \n\n")
         self.text_params.config(state=tk.DISABLED)
         self.disable_all_bottons()
+        # Para evitar que la aplicación se bloque mientras se realiza la lectura del módulo remoto
+        # se hace la llamada en multihilo, así se realiza por un lado el mainloop y por el otro la
+        # lectura del nodo remoto
         threading.Thread(target=self.read_remote_xbee_cmmd,
                          args=(self, )).start()
-        #self.master.after(100, self.update_status)
-
 
 
     @staticmethod
@@ -154,8 +184,10 @@ class Application(tk.Frame):
     def update_discover_log(self,cola):
         self.disable_all_bottons()
         while self.discover_status != 1:
-            cola.put(discover_devices_xbee.passlog())
+            log=discover_devices_xbee.passlog()
+            cola.put(log)
             time.sleep(0.1)
+
 
 
 
@@ -177,10 +209,10 @@ class Application(tk.Frame):
         self.discover_status = 0
         self.text_discover.delete('1.0', tk.END)
         self.clear_discover['state']=tk.DISABLED
-        self.after(100, self.process_queue)
-        threading.Thread(target=self.search).start()
         threading.Thread(target=self.update_discover_log,
                          args=(self, self.queue,)).start()
+        threading.Thread(target=self.search).start()
+        self.after(100, self.process_queue)
 
 
 
@@ -191,8 +223,6 @@ class Application(tk.Frame):
             self.text_discover.config(state="normal")
             self.text_discover.delete('1.0', tk.END)
             self.text_discover.insert(tk.INSERT,data)
-            #self.text_discover.config(state=tk.DISABLED)
-            #self.disable_all_bottons()
         except queue.Empty:
             pass
         self.master.after(100, self.process_queue)

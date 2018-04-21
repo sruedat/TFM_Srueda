@@ -38,19 +38,23 @@ def main(Node_Address):
     print(" +---------------------------------------------------- --+\n")
 
     local_device = XBeeDevice(PORT, BAUD_RATE)
-
+    local_device.open()
+    remote_device = RemoteZigBeeDevice(local_device, NodeAddress)
 
     try:
-        local_device.open()
-        remote_device = RemoteZigBeeDevice(local_device, NodeAddress)
+
+
         # Get Hardware Models with extended DIO (P5 to P9)
         Hardware_Extended = read_sys_config.ReadHardwareVersionWhithP5ToP9PinsFromFile()
         HV = utils.hex_to_string(remote_device.get_parameter("HV"))
-        # Set filne name source of the params
+        # Set file name source of the params
         read_node_config_file.set_path_to_file(Node_Address)
+
 
         #No se puede modificar la PAN ID vía RF porque se pierde conexión
         #remote_device.set_parameter("ID",utils.hex_string_to_bytes(SysConfig.ReadScanChannelsFromFile(Node_Address)))
+
+        print(read_node_config_file.ReadScanChannelsFromFile(Node_Address))
         remote_device.set_parameter("SC", utils.hex_string_to_bytes(read_node_config_file.ReadScanChannelsFromFile(Node_Address)))
         remote_device.set_parameter("SD", utils.hex_string_to_bytes(read_node_config_file.ReadScanDurationFromFile(Node_Address)))
         remote_device.set_parameter("ZS", utils.hex_string_to_bytes(read_node_config_file.ReadZigBeeStackProfileFromFile(Node_Address)))

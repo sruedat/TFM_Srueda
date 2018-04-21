@@ -1,48 +1,69 @@
-# Copyright 2017, Digi International Inc.
-#
-# Permission to use, copy, modify, and/or distribute this software for any
-# purpose with or without fee is hereby granted, provided that the above
-# copyright notice and this permission notice appear in all copies.
-#
-# THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
-# WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
-# MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
-# ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
-# WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
-# ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
-# OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+# Sergio Rueda Teruel. 2018
+# Este sofware ha sido desarrollado para el trabajo fin de master de la titulación
+# Máster Unviersitario en Ingeniería de TElecomuniación UOC-URL de la
+# Universisdad Oberta de Catalunya y lleva por título
+# "Diseño de una WSN para la estimación del seein de l cúpla D080,
+# en el Observatorio Astrofísico de Javalambre."
 
-import time, sys
-from digi.xbee.util import utils
+# Para la realización de este código se han utilizado las librerías python
+# que la empresa Digi (Digi International Inc.) proporciona en su página web
+# (https://www.digi.com/blog/xbee/introducing-the-official-digi-xbee-python-library/)
+
+# este código está sometído a licencia de Reconocimiento-NoComercial-CompartirIgual
+# 3.0 España de Creative Commons.
 
 
+
+# Este módulo se utiliza para descubrir equipos remotos conectados a la misma red (PAN ID)
+# que el equipo local, es desde este equipo local desde el que se realizan las tareas de
+# descubrimiento.
+
+import time, sys, argparse
+import read_sys_config
 from digi.xbee.models.status import NetworkDiscoveryStatus
 from digi.xbee.devices import XBeeDevice
 sys.tracebacklimit = 0
 
-# TODO: Replace with the serial port where your local module is connected to.
-PORT = "COM6"
-# TODO: Replace with the baud rate of your local module.
-BAUD_RATE = 9600
+# Se admiten parámetros de depuración para la invocacción directa del módulo
+# el parámetro -v VERBOSE muestra por consola la evolución del módulo
+# discover-devices_xbee -v VERBOSE
+parser= argparse.ArgumentParser()
+parser.add_argument("-v","--verbose", help="Activates Verbose output")
+args=parser.parse_args()
+
+# Parámetros de conexión con el puerto serie al dispositivo local
+port = read_sys_config.ReadLocalPortFromFile()
+baud_rate = read_sys_config.ReadLocalBaudRateFromFile()
+
+
+
+# La varible log será utilizada para ir registrando el avnace de todo el proceso
+# y se devolvera en el procedimiento passlog para que pueda ser leida accedida
+# por otros módulos
 log=""
 
-
+# Este procedimiento puede ser invocado por otros módulos para ir conociendo el estado
+# del proceso de descrubirmiento de nodos en la red
 def passlog():
     global log
     time.sleep(0.2)
     return log
 
+# Procedimiento principla que gestiona las tareas de descubrimiento
 def main():
     global log
-    print(" +---------------------------------------------+")
-    print(" | XBee Python Library Discover Devices Sample |")
-    print(" +---------------------------------------------+\n")
-    device = XBeeDevice(PORT, BAUD_RATE)
-    log =""
-    try:
-        device.open()
+    state = 0
+    if args.verbose:
+        print(" +---------------------------------------------+")
+        print(" |       XBee Discover Devices Module          |")
+        print(" +---------------------------------------------+\n")
 
-        xbee_network = device.get_network()
+    local_device = XBeeDevice(port, baud_rate)
+    try:
+        log=""
+        local_device.open()
+
+        xbee_network = local_device.get_network()
 
         xbee_network.set_discovery_timeout(15)  # 15 seconds.
 
@@ -51,26 +72,21 @@ def main():
         # Callback for discovered devices.
         def callback_device_discovered(remote):
             global log
-            #print("Device discovered:\n" + "%s" % remote)
             log =log+"Device discovered:\n" + "%s" % remote +"\n\n"
-
-
-
-
-
-
-
+            if args.verbose:
+                print("Device discovered: " + "%s" % remote)
         # Callback for discovery finished.
         def callback_discovery_finished(status):
             global log
             if status == NetworkDiscoveryStatus.SUCCESS:
-                #print("\n"+"Discovery process finished successfully.")
                 log=log+"Discovery process finished successfully.\n"
+
+                if args.verbose:
+                    print("Discovery process finished successfully.")
             else:
-                #print("There was an error discovering devices: %s" % status.description)
-                log= log+"There was an error discovering devices: %s\n" % status.description
-
-
+                log= "There was an error discovering devices: %s\n" % status.description
+                if args.verbose:
+                    print("There was an error discovering devices: %s" % status.description)
 
         xbee_network.add_device_discovered_callback(callback_device_discovered)
 
@@ -78,37 +94,28 @@ def main():
 
         xbee_network.start_discovery_process()
 
-        #print("Discovering remote XBee devices...")
         log = "\nDiscovering remote XBee devices...\n\n"
+        if args.verbose:
+            print("Discovering remote XBee devices...")
 
 
         while xbee_network.is_discovery_running():
+            # Actualiza el log para otros módulos
             passlog()
             time.sleep(0.1)
 
-
-
-
-
-
+        state = 1
+        return state
 
 
     except:
-        if device.is_open():
-            device.close()
+        if local_device.is_open():
+            local_device.close()
         pass
 
+        # Si es invocado por otros módulos devuleve un 1 indicando que ya ha acabdo la fase de descubrimiento
+
     finally:
-        if device is not None and device.is_open():
-            device.close()
-
-    state=1
-    return state
-
-
-
-
-if __name__ == '__main__':
-    main()
-
-
+        if local_device is not None and local_device.is_open():
+            local_device.close()
+        sys._clear_type_cache()

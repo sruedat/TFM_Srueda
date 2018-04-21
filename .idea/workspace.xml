@@ -11,32 +11,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="read_node_config_file.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/read_node_config_file.py">
+      <file leaf-file-name="sys_config.ini" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/config/sys_config.ini">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="51">
-              <caret line="24" column="22" lean-forward="true" selection-start-line="24" selection-start-column="22" selection-end-line="24" selection-end-column="22" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="local_node.ini" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/config/local_node.ini">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-170">
-              <caret line="17" column="16" lean-forward="true" selection-start-line="17" selection-start-column="16" selection-end-line="17" selection-end-column="16" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="write_local_params_xbee.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/write_local_params_xbee.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="195">
-              <caret line="135" column="61" lean-forward="true" selection-start-line="134" selection-start-column="8" selection-end-line="135" selection-end-column="61" />
-              <folding>
-                <element signature="e#754#794#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="119">
+              <caret line="7" column="11" selection-start-line="7" selection-start-column="11" selection-end-line="7" selection-end-column="11" />
             </state>
           </provider>
         </entry>
@@ -44,8 +23,8 @@
       <file leaf-file-name="write_remote_params_xbee.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/write_remote_params_xbee.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="382">
-              <caret line="139" column="21" lean-forward="true" selection-start-line="139" selection-start-column="21" selection-end-line="139" selection-end-column="21" />
+            <state relative-caret-position="748">
+              <caret line="50" column="8" selection-start-line="50" selection-start-column="8" selection-end-line="50" selection-end-column="8" />
               <folding>
                 <element signature="e#754#794#0" expanded="true" />
               </folding>
@@ -53,11 +32,44 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="0013A200415BFC59.ini" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/config/0013A200415BFC59.ini">
+      <file leaf-file-name="read_node_config_file.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/read_node_config_file.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="1" column="1" lean-forward="true" selection-start-line="1" selection-start-column="1" selection-end-line="1" selection-end-column="17" />
+            <state relative-caret-position="340">
+              <caret line="20" selection-start-line="20" selection-end-line="20" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="discover_devices_xbee.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/discover_devices_xbee.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="816">
+              <caret line="51" column="44" lean-forward="true" selection-start-line="51" selection-start-column="44" selection-end-line="51" selection-end-column="44" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="temp_simulator.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/temp_simulator.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="459">
+              <caret line="29" column="30" selection-start-line="29" selection-start-column="30" selection-end-line="29" selection-end-column="30" />
+              <folding>
+                <element signature="e#0#42#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="read_local_params_xbee.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/read_local_params_xbee.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="7174">
+              <caret line="425" column="10" selection-start-line="423" selection-end-line="425" selection-end-column="10" />
+              <folding>
+                <element signature="e#754#794#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -65,8 +77,38 @@
       <file leaf-file-name="gui.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/gui.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="484">
-              <caret line="108" column="47" lean-forward="true" selection-start-line="108" selection-start-column="47" selection-end-line="108" selection-end-column="47" />
+            <state relative-caret-position="3519">
+              <caret line="219" column="28" selection-start-line="219" selection-start-column="28" selection-end-line="219" selection-end-column="28" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ReadRemoteADC_XBee.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/ReadRemoteADC_XBee.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="279">
+              <caret line="43" column="7" lean-forward="true" selection-start-line="43" selection-start-column="7" selection-end-line="43" selection-end-column="7" />
+              <folding>
+                <element signature="e#763#803#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="read_remote_params_xbee.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/read_remote_params_xbee.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="289">
+              <caret line="17" selection-start-line="17" selection-end-line="17" selection-end-column="32" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="0013A200415BFC59.ini" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/config/0013A200415BFC59.ini">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="17">
+              <caret line="1" column="17" selection-start-line="1" selection-start-column="1" selection-end-line="1" selection-end-column="17" />
             </state>
           </provider>
         </entry>
@@ -106,6 +148,9 @@
       <replace>read_node_config</replace>
       <replace>read_node_config_file</replace>
     </replaceStrings>
+    <dirStrings>
+      <dir>C:\Users\sruedat\PycharmProjects\TFM_Srueda</dir>
+    </dirStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -118,7 +163,6 @@
         <option value="$PROJECT_DIR$/SetAndGetParams_XBee.py" />
         <option value="$PROJECT_DIR$/ReadLocalParams_XBeeV2.py" />
         <option value="$PROJECT_DIR$/config.ini" />
-        <option value="$PROJECT_DIR$/ReadRemoteADC_XBee.py" />
         <option value="$PROJECT_DIR$/test_gui_v2.py" />
         <option value="$PROJECT_DIR$/test_logs.py" />
         <option value="$PROJECT_DIR$/test_gui.py" />
@@ -135,49 +179,42 @@
         <option value="$PROJECT_DIR$/Config/0013A20041679E85.ini" />
         <option value="$PROJECT_DIR$/Config/sys_config.ini" />
         <option value="$PROJECT_DIR$/read_node_config.py" />
-        <option value="$PROJECT_DIR$/read_local_params_xbee.py" />
-        <option value="$PROJECT_DIR$/config/sys_config.ini" />
         <option value="$PROJECT_DIR$/read_sys_config.py" />
         <option value="$PROJECT_DIR$/WriteRemoteParams_XBee.py" />
-        <option value="$PROJECT_DIR$/config/0013A2004172BFE1.ini" />
-        <option value="$PROJECT_DIR$/read_node_config_file.py" />
-        <option value="$PROJECT_DIR$/write_local_params_xbee.py" />
-        <option value="$PROJECT_DIR$/config/local_node.ini" />
         <option value="$PROJECT_DIR$/test_gui3.py" />
         <option value="$PROJECT_DIR$/Old/test_gui.py" />
+        <option value="$PROJECT_DIR$/config/local_node.ini" />
+        <option value="$PROJECT_DIR$/config/0013A2004172BFE1.ini" />
+        <option value="$PROJECT_DIR$/write_local_params_xbee.py" />
+        <option value="$PROJECT_DIR$/config/sys_config.ini" />
+        <option value="$PROJECT_DIR$/read_local_params_xbee.py" />
         <option value="$PROJECT_DIR$/gui.py" />
+        <option value="$PROJECT_DIR$/discover_devices_xbee.py" />
+        <option value="$PROJECT_DIR$/config/0013A200415BFC59.ini" />
         <option value="$PROJECT_DIR$/write_remote_params_xbee.py" />
+        <option value="$PROJECT_DIR$/read_node_config_file.py" />
+        <option value="$PROJECT_DIR$/temp_simulator.py" />
+        <option value="$PROJECT_DIR$/ReadRemoteADC_XBee.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-11" />
-    <option name="y" value="22" />
-    <option name="width" value="624" />
-    <option name="height" value="468" />
+    <option name="x" value="684" />
+    <option name="y" value="126" />
+    <option name="width" value="1404" />
+    <option name="height" value="522" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
               <item name="TFM_Srueda" type="b2602c69:ProjectViewProjectNode" />
               <item name="TFM_Srueda" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="TFM_Srueda" type="b2602c69:ProjectViewProjectNode" />
-              <item name="TFM_Srueda" type="462c0819:PsiDirectoryNode" />
-              <item name="config" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="TFM_Srueda" type="b2602c69:ProjectViewProjectNode" />
-              <item name="TFM_Srueda" type="462c0819:PsiDirectoryNode" />
-              <item name="venv" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="TFM_Srueda" type="b2602c69:ProjectViewProjectNode" />
@@ -198,23 +235,24 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
-    <property name="settings.editor.selected.configurable" value="vcs.Git" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\sruedat\PycharmProjects\TFM_Srueda" />
-      <recent name="C:\Users\sruedat\PycharmProjects\TFM_Srueda\config" />
-      <recent name="C:\Users\sruedat\PycharmProjects\TFM_Srueda\Config" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\sruedat\PycharmProjects\TFM_Srueda\Old" />
       <recent name="C:\Users\sruedat\PycharmProjects\TFM_Srueda\Config" />
       <recent name="C:\Users\sruedat\PycharmProjects\TFM_Srueda" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\sruedat\PycharmProjects\TFM_Srueda" />
+      <recent name="C:\Users\sruedat\PycharmProjects\TFM_Srueda\config" />
+      <recent name="C:\Users\sruedat\PycharmProjects\TFM_Srueda\Config" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -229,7 +267,43 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.gui">
+  <component name="RunManager" selected="Python.ReadRemoteADC_XBee">
+    <configuration name="ReadRemoteADC_XBee" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="TFM_Srueda" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/ReadRemoteADC_XBee.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
+    <configuration name="discover_devices_xbee" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="TFM_Srueda" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/discover_devices_xbee.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
     <configuration name="gui" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="TFM_Srueda" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -248,7 +322,7 @@
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
     </configuration>
-    <configuration name="read_node_config_file" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="temp_simulator" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="TFM_Srueda" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -260,43 +334,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/read_node_config_file.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-    </configuration>
-    <configuration name="test_gui3" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="TFM_Srueda" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="C:\Users\sruedat\PycharmProjects\TFM_Srueda\Old\test_gui3.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-    </configuration>
-    <configuration name="write_local_params_xbee" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="TFM_Srueda" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/write_local_params_xbee.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/temp_simulator.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -321,19 +359,19 @@
       <option name="MODULE_MODE" value="false" />
     </configuration>
     <list>
-      <item itemvalue="Python.test_gui3" />
-      <item itemvalue="Python.write_local_params_xbee" />
-      <item itemvalue="Python.read_node_config_file" />
-      <item itemvalue="Python.write_remote_params_xbee" />
       <item itemvalue="Python.gui" />
+      <item itemvalue="Python.discover_devices_xbee" />
+      <item itemvalue="Python.ReadRemoteADC_XBee" />
+      <item itemvalue="Python.temp_simulator" />
+      <item itemvalue="Python.write_remote_params_xbee" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.ReadRemoteADC_XBee" />
         <item itemvalue="Python.gui" />
-        <item itemvalue="Python.test_gui3" />
-        <item itemvalue="Python.write_local_params_xbee" />
+        <item itemvalue="Python.temp_simulator" />
         <item itemvalue="Python.write_remote_params_xbee" />
-        <item itemvalue="Python.read_node_config_file" />
+        <item itemvalue="Python.discover_devices_xbee" />
       </list>
     </recent_temporary>
   </component>
@@ -353,22 +391,22 @@
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="2575" height="1415" extended-state="6" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.33307302" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.33268255" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Python Console" order="7" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.32798165" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.45259938" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Terminal" order="7" />
+      <window_info anchor="bottom" id="Terminal" order="7" weight="0.32874617" />
       <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.55198777" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.43960243" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="Inspection Results" order="7" weight="0.32874617" />
       <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Find" order="1" />
     </layout>
@@ -388,13 +426,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/read_remote_params_xbee.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="24" column="65" lean-forward="true" selection-start-line="24" selection-start-column="65" selection-end-line="24" selection-end-column="65" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Old/Broadcast_XBee.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="323">
@@ -619,48 +650,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test_logs.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="24" column="14" selection-start-line="24" selection-start-column="14" selection-end-line="24" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/test_logs.py" />
     <entry file="file://$PROJECT_DIR$/Old/overflow.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="663">
           <caret line="43" column="21" selection-start-line="43" selection-start-column="21" selection-end-line="43" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/discover_devices_xbee.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1802">
-          <caret line="111" column="10" selection-start-line="111" selection-start-column="10" selection-end-line="111" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ReadRemoteADC_XBee.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="19" selection-start-line="19" selection-end-line="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config/sys_config.ini">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/read_remote_params_xbee.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="493">
-          <caret line="34" column="48" selection-start-line="34" selection-start-column="48" selection-end-line="34" selection-end-column="48" />
-          <folding>
-            <element signature="e#754#794#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -671,34 +665,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/read_local_params_xbee.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="21" column="6" selection-start-line="21" selection-start-column="6" selection-end-line="21" selection-end-column="6" />
-          <folding>
-            <element signature="e#754#794#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config/0013A20041679E85_old.ini">
+    <entry file="file://$PROJECT_DIR$/Old/0013A20041679E85_old.ini">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
           <caret line="1" column="1" selection-start-line="1" selection-start-column="1" selection-end-line="1" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/read_node_config_file.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="24" column="22" lean-forward="true" selection-start-line="24" selection-start-column="22" selection-end-line="24" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config/local_node.ini">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-170">
-          <caret line="17" column="16" lean-forward="true" selection-start-line="17" selection-start-column="16" selection-end-line="17" selection-end-column="16" />
         </state>
       </provider>
     </entry>
@@ -706,9 +676,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="403">
           <caret line="35" lean-forward="true" selection-start-line="35" selection-end-line="35" />
-          <folding>
-            <element signature="e#0#20#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -721,34 +688,62 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/config/0013A2004172BFE1.ini">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="6" selection-start-line="10" selection-start-column="6" selection-end-line="10" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/gui.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="484">
-          <caret line="108" column="47" lean-forward="true" selection-start-line="108" selection-start-column="47" selection-end-line="108" selection-end-column="47" />
+        <state>
+          <caret selection-end-column="105" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/write_local_params_xbee.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="135" column="61" lean-forward="true" selection-start-line="134" selection-start-column="8" selection-end-line="135" selection-end-column="61" />
+        <state relative-caret-position="2533">
+          <caret line="153" column="42" selection-start-line="153" selection-start-column="42" selection-end-line="153" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/local_node.ini">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="9" selection-start-line="5" selection-start-column="9" selection-end-line="5" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/sys_config.ini">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="11" selection-start-line="7" selection-start-column="11" selection-end-line="7" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/write_remote_params_xbee.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="748">
+          <caret line="50" column="8" selection-start-line="50" selection-start-column="8" selection-end-line="50" selection-end-column="8" />
           <folding>
             <element signature="e#754#794#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/write_remote_params_xbee.py">
+    <entry file="file://$PROJECT_DIR$/read_node_config_file.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="382">
-          <caret line="139" column="21" lean-forward="true" selection-start-line="139" selection-start-column="21" selection-end-line="139" selection-end-column="21" />
+        <state relative-caret-position="340">
+          <caret line="20" selection-start-line="20" selection-end-line="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gui.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3519">
+          <caret line="219" column="28" selection-start-line="219" selection-start-column="28" selection-end-line="219" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/temp_simulator.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="459">
+          <caret line="29" column="30" selection-start-line="29" selection-start-column="30" selection-end-line="29" selection-end-column="30" />
           <folding>
-            <element signature="e#754#794#0" expanded="true" />
+            <element signature="e#0#42#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -756,7 +751,41 @@
     <entry file="file://$PROJECT_DIR$/config/0013A200415BFC59.ini">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
-          <caret line="1" column="1" lean-forward="true" selection-start-line="1" selection-start-column="1" selection-end-line="1" selection-end-column="17" />
+          <caret line="1" column="17" selection-start-line="1" selection-start-column="1" selection-end-line="1" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/read_remote_params_xbee.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="17" selection-start-line="17" selection-end-line="17" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/read_local_params_xbee.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="7174">
+          <caret line="425" column="10" selection-start-line="423" selection-end-line="425" selection-end-column="10" />
+          <folding>
+            <element signature="e#754#794#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/discover_devices_xbee.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="816">
+          <caret line="51" column="44" lean-forward="true" selection-start-line="51" selection-start-column="44" selection-end-line="51" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ReadRemoteADC_XBee.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="279">
+          <caret line="43" column="7" lean-forward="true" selection-start-line="43" selection-start-column="7" selection-end-line="43" selection-end-column="7" />
+          <folding>
+            <element signature="e#763#803#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

@@ -150,6 +150,8 @@ def main(NodeAddress):
     finally:
         if local_device is not None and local_device.is_open():
             local_device.close()
+        else:
+            log = "  No local device found\n"
 
     return log
 

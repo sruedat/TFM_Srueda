@@ -14,49 +14,137 @@
 
 from digi.xbee.devices import XBeeDevice
 from digi.xbee.io import IOLine, IOMode
-import time, sys, threading
+from digi.xbee.util import utils
+import time, sys, threading, math, string
+import read_sys_config
+import temp_simulator
+
+
 sys.tracebacklimit = 0
 
+# Parámetros de conexión con el puerto serie al dispositivo local
+port = read_sys_config.ReadLocalPortFromFile()
+baud_rate = read_sys_config.ReadLocalBaudRateFromFile()
 
-# TODO: Replace with the serial port where your local module is connected to.
-PORT = "COM6"
-# TODO: Replace with the baud rate of your local module.
-BAUD_RATE = 9600
 
-REMOTE_NODE_ID = "END_DEVICE2"
+REMOTE_NODE_ID = "REMOTO_1"
 
-IOLINE_IN = IOLine.DIO2_AD2
+IOLINE_IN_3 = IOLine.DIO3_AD3
+IOLINE_IN_2 = IOLine.DIO2_AD2
+IOLINE_IN_1 = IOLine.DIO1_AD1
+IOLINE_IN_0 = IOLine.DIO0_AD0
+MAX_VOLTAGE_INPUT=1200
+MAX_LECTURES = 1
+vcc= 3080 #mv
+VOLTAGE_SHIFT=0
+
+def ntc10k_calculate_temp(raw_value):
+    B=3975
+    B=3982
+    #mV
+    voltage = (MAX_VOLTAGE_INPUT * raw_value / 1024)
+    Rntc = 210000*(voltage/(vcc-voltage))
+    print (Rntc)
+    temperatureC = 1 / (math.log(Rntc/10000,2)/ B + 1 / 298.15)- 273.15
+    log="ntc 10K temper: %.2f" % temperatureC
+    print(log)
+    return temperatureC
+
+def tmp36_calculate_tmp (raw_value):
+    #mV
+    voltage= ((MAX_VOLTAGE_INPUT * raw_value) + 512) / 1023
+    temperatureC = ((voltage/1000) - 0.5) * 100
+    log="Temperatura: %.2f" % temperatureC
+
+def lmt84_calculate_tmp(raw_value):
+    #mV
+    voltage = (MAX_VOLTAGE_INPUT*raw_value/1024.0)+VOLTAGE_SHIFT
+    temperatureC =  ((5.506-math.sqrt(math.pow(-5.506,2)+4*0.00176*(870.6-voltage)))/(2*-0.00176))+30
+    log ="LMT84 Temperatura: %.2f" % temperatureC
+    return  temperatureC
 
 
 def main():
     print(" +--------------------------------------------+")
     print(" | XBee Python Library Read Remote ADC Sample |")
     print(" +--------------------------------------------+\n")
-
+    local_device = XBeeDevice(port, baud_rate)
+    xbee_network = local_device.get_network()
+    local_device.open()
+    remote_device = xbee_network.discover_device(REMOTE_NODE_ID)
+    remote_device.set_io_configuration(IOLINE_IN_3, IOMode.ADC)
+    remote_device.set_io_configuration(IOLINE_IN_0, IOMode.ADC)
     stop = False
     th = None
-
-    local_device = XBeeDevice(PORT, BAUD_RATE)
-
+    time.sleep(1)
     try:
-        local_device.open()
 
-        # Obtain the remote XBee device from the XBee network.
-        xbee_network = local_device.get_network()
-        remote_device = xbee_network.discover_device(REMOTE_NODE_ID)
+    # Obtain the remote XBee device from the XBee network.
+
         if remote_device is None:
             print("Could not find the remote device")
             exit(1)
 
-        remote_device.set_io_configuration(IOLINE_IN, IOMode.ADC)
+
+        time.sleep(1)
 
         def read_adc_task():
             while not stop:
-                # Read the analog value from the remote input line.
-                value = remote_device.get_adc_value(IOLINE_IN)
-                print("%s: %d" % (IOLINE_IN, value))
 
-                time.sleep(6)
+
+
+
+                # Read the analog value from the remote input line.
+                total = 0
+                lectura = list(range(MAX_LECTURES))
+                #filtro por software
+                #*********************************************************************
+                #borra vector
+                #for n in range(0,MAX_LECTURES):
+                #    lectura[n]=0
+                # acumula valor entrada
+                #for n in range(0, MAX_LECTURES):
+                 #       lectura[n] = remote_device.get_adc_value(IOLINE_IN_3)
+                 #       total = total + lectura[n]
+                 #       time.sleep(0.3)
+                #promedia
+                #value_3 = total/MAX_LECTURES
+                value_0=remote_device.get_adc_value(IOLINE_IN_0)
+
+                #print(IOLINE_IN_3)
+                #tmp36_calculate_tmp(value)
+                tlmt84=lmt84_calculate_tmp(value_0)
+                #print()
+                #************************************************************************
+                total = 0
+                #for n in range(0,MAX_LECTURES):
+                 #   lectura[n]=0
+                # acumula valor entrada
+                #for n in range(0, MAX_LECTURES):
+                 #       lectura[n] = remote_device.get_adc_value(IOLINE_IN_0)
+                 #       total = total + lectura[n]
+                 #       time.sleep(0.3)
+                #promedia
+                #value_1 = total/MAX_LECTURES
+                #print(IOLINE_IN_3)
+                #tmp36_calculate_tmp(value)
+                vcc = remote_device.get_parameter("%V")
+                vcc = int(utils.hex_to_string(vcc).replace(' ', ''), 16)
+                time.sleep(2)
+                #print(vcc)
+                value_1=remote_device.get_adc_value(IOLINE_IN_1)
+
+                tntc=ntc10k_calculate_temp(value_1)
+                #************************************************************************
+                temp_simulator.main(tlmt84, tntc, 0, 0)
+                print("")
+
+                #value = remote_device.get_adc_value(IOLINE_IN_2)
+                #print(IOLINE_IN_2)
+                #tmp36_calculate_tmp(value)
+                #lmt84_calculate_tmp(value)
+                #print("\n")
+                time.sleep(15)
 
         th = threading.Thread(target=read_adc_task)
 

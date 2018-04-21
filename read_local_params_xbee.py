@@ -17,10 +17,10 @@ from digi.xbee.devices import XBeeDevice
 from digi.xbee.util import utils
 import sys
 import read_sys_config
-sys.tracebacklimit = 0
+sys.tracebacklimit = 1
 
 def main():
-
+    #log=""
     # Parámetros de conexión con el puerto serie al dispositivo local
     port = read_sys_config.ReadLocalPortFromFile()
     baud_rate = read_sys_config.ReadLocalBaudRateFromFile()
@@ -34,7 +34,6 @@ def main():
         print(" +-----------------------------------------------+\n")
 
         local_device.open()
-
        # Get Hardware Models with extended DIO (P5 to P9)
         Hardware_Extended = read_sys_config.ReadHardwareVersionWhithP5ToP9PinsFromFile()
        # Get parameters.
@@ -272,7 +271,7 @@ def main():
         log = log + " Association Indication:      %s" % AI + "\n"
         log = log + " RSSI of Last Packet:         %s" % DB + "\n"
         log = log + " Supply Votage:               %s" % V + "\n\n"
-
+        print (log)
         '''
         #print(" +-----------------------------+")
         #print(" | Networking                  |")
@@ -411,12 +410,15 @@ def main():
     except:
         if local_device.is_open():
             local_device.close()
+        log ="Sorry an error has happened"
         pass
 
 
     finally:
         if local_device is not None and local_device.is_open():
             local_device.close()
+        pass
+
 
     return log
 
