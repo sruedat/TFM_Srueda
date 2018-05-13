@@ -26,7 +26,7 @@ sys.tracebacklimit = 0
 PORT=read_sys_config.ReadLocalPortFromFile()
 BAUD_RATE = read_sys_config.ReadLocalBaudRateFromFile()
 
-REMOTE_1 = "0013A200415BFC59"
+REMOTE_1 = "0013A200416299FE"
 
 
 def main(Node_Address):
@@ -48,9 +48,8 @@ def main(Node_Address):
         Hardware_Extended = read_sys_config.ReadHardwareVersionWhithP5ToP9PinsFromFile()
         HV = utils.hex_to_string(remote_device.get_parameter("HV"))
         # Set file name source of the params
+        print("0013A200416299FE")
         read_node_config_file.set_path_to_file(Node_Address)
-
-
         #No se puede modificar la PAN ID vía RF porque se pierde conexión
         #remote_device.set_parameter("ID",utils.hex_string_to_bytes(SysConfig.ReadScanChannelsFromFile(Node_Address)))
 

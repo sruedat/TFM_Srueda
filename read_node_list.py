@@ -15,33 +15,19 @@
 
 import configparser
 
-CONFIG_FILE = "config/sys_config.ini"
+CONFIG_FILE = "config/list_of_nodes.ini"
 
-settings = configparser.ConfigParser()
-settings.read(CONFIG_FILE)
+def ReadListOfNodesFromFile():
+    with open(CONFIG_FILE, "r") as ins:
+        array = []
+        for line in ins:
+            array.append(line.strip('\n'))
+    return array
 
-
-
-def ReadHardwareVersionWhithP5ToP9PinsFromFile():
-    return settings.get("COMMON", "HARDWARE_VERSION_WITH_P5_TO_P9")
-
-def ReadLocalPortFromFile():
-    return settings.get("COMMON", "PORT")
-
-
-def ReadLocalBaudRateFromFile():
-    return settings.get("COMMON", "PORT_BAUD_RATE")
-
-def main():
-    try:
-        settings.read(CONFIG_FILE)
-
-    except:
-        print("error openning config.ini")
 
 
 if __name__ == '__main__':
-    main()
+    ReadListOfNodesFromFile()
 
 
 

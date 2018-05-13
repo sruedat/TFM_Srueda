@@ -21,7 +21,7 @@ import sys
 import read_sys_config
 sys.tracebacklimit = 0
 
-PARAM_VALUE_REMOTE_NODE_ADDR="0000000000000000"
+PARAM_VALUE_REMOTE_NODE_ADDR="0013A200416299FE"
 
 
 # Parámetros de conexión con el puerto serie al dispositivo local
