@@ -35,10 +35,12 @@ IOLINE_IN_2 = IOLine.DIO2_AD2
 IOLINE_IN_1 = IOLine.DIO1_AD1
 IOLINE_IN_0 = IOLine.DIO0_AD0
 MAX_VOLTAGE_INPUT = 1200
-MAX_INTENTOS_DESCUBRIMIENTO = 3 # número máximo de intentos de descubrir a un nodo
+MAX_INTENTOS_DESCUBRIMIENTO = 10 # número máximo de intentos de descubrir a un nodo
 MAX_INTENTOS_LEER_DATOS = 10 # número máximo de intentos de descubrir a un nodo
 LONG_WAIT=30
 SHORT_WAIT=0.5
+systembusy=False
+
 
 
 
@@ -65,28 +67,30 @@ def ntc10k_calculate_temp(raw_value, volts):
     return temperatureC
 
 
-systembusy=False
+lock = threading.Lock()
 def main():
 
     def read_adc_task(indice):
+        global systembusy
         while True or intentos[indice] < MAX_INTENTOS_LEER_DATOS:
             try:
+                print("entro hilo")
+                lock.acquire()
+                print(threading.current_thread().getName())
                 # Leemos el valor del nodo para luego calcular el valor de la resistencia del termistor mediante la
                 # ley de Ohm para un divisor de tensión
-                if systembusy == False:
-                    systembusy = True
-                    #time.sleep(1)
-                    vcc = nodos_activos[indice].get_parameter("%V")
-                    vcc = int(utils.hex_to_string(vcc).replace(' ', ''), 16)
+                #time.sleep(1)
+                vcc = nodos_activos[indice].get_parameter("%V")
+                vcc = int(utils.hex_to_string(vcc).replace(' ', ''), 16)
                 # Leemos el valor crudo de las entradas analógicas
-                    raw_value_1 = nodos_activos[indice].get_adc_value(IOLINE_IN_0)
-                    raw_value_2 = nodos_activos[indice].get_adc_value(IOLINE_IN_1)
-                    raw_value_3 = nodos_activos[indice].get_adc_value(IOLINE_IN_2)
-                    raw_value_4 = nodos_activos[indice].get_adc_value(IOLINE_IN_3)
+                raw_value_1 = nodos_activos[indice].get_adc_value(IOLINE_IN_0)
+                raw_value_2 = nodos_activos[indice].get_adc_value(IOLINE_IN_1)
+                raw_value_3 = nodos_activos[indice].get_adc_value(IOLINE_IN_2)
+                raw_value_4 = nodos_activos[indice].get_adc_value(IOLINE_IN_3)
                 # Calculamos el valor de temperatura en cada entrada en función de la tensión de alimentación y del
                 # valor crudo
 
-                print("Nodo %s" % nodos_activos[indice])
+                #print("Nodo %s" % nodos_activos[indice])
                 tntc_1 = ntc10k_calculate_temp(raw_value_1, vcc)
                 tntc_2 = ntc10k_calculate_temp(raw_value_2, vcc)
                 tntc_3 = ntc10k_calculate_temp(raw_value_3, vcc)
@@ -97,24 +101,38 @@ def main():
                 intentos[indice]=0
                 print(str(datetime.now()))
                 send_data_to_telegraf.main(REMOTE_NODES_ID[indice], tntc_1, tntc_2, tntc_3, tntc_4, float(vcc))
-                systembusy = False
+                print("Telegraf!")
                 # Esperamos hasta la siguiente toma de muestras
-                espera = LONG_WAIT
+                espera[indice] = LONG_WAIT
+                print("Systembusy: %s" % systembusy)
+                print ("indice %s" % indice)
+                print("Nodos esperas %s" % espera)
+                lock.release()
+
             #except TimeoutException as ex:
             except:
                 intentos[indice] += 1
+                lock.release()
+                espera[indice] = SHORT_WAIT
                 print (REMOTE_NODES_ID[indice])
+                print("Systembusy: %s" % systembusy)
                 print("ADC timeouts %s" % intentos)
-                systembusy = False
-                espera=SHORT_WAIT
+                print("Nodos esperas %s" % espera)
+
                 if intentos[indice] > MAX_INTENTOS_LEER_DATOS:
-                    th[indice].join()
-                   # raise
+                    #th[indice].join()
+                    raise
             #print("Espera: %s" % espera)
-            print("")
-            time.sleep(espera)
+            print(espera[indice])
+            time.sleep(espera[indice])
 
 
+
+    def status():
+        global systembusy
+        while True:
+            print("Systembusy: %s" %systembusy)
+            time.sleep(1)
 
 
 
@@ -124,15 +142,14 @@ def main():
     nodos_activos = []
     intentos = []
     print("Cantidad de nodos: %s" % len(REMOTE_NODES_ID))
-    print(" +----------------------------------------+")
-    print(" | XBee Python Read Remote ADC multi-hilo |")
-    print(" +----------------------------------------+\n")
+
 
     try:
         local_device = XBeeDevice(port, baud_rate)
         xbee_network = local_device.get_network()
         local_device.open()
-
+        th2 = threading.Thread(name='log', target=status)
+        #th2.start()
 
         for index in range (0, len(REMOTE_NODES_ID)):
             nodo_descubierto=False
@@ -145,7 +162,7 @@ def main():
                     intentos [index]+=1
                     print ("Nodo: %s" % (REMOTE_NODES_ID[index]))
                     print ("Intentos descubrimiento restantes: %s" % (MAX_INTENTOS_DESCUBRIMIENTO-intentos[index]))
-                    time.sleep(3)
+                    time.sleep(1)
                 else:
                     nodos_activos.append(remote_device)
                     index_devices+=1
@@ -155,14 +172,18 @@ def main():
         for index in range (0, index_devices):
             thread=threading.Thread(name=nodos_activos[index], target=read_adc_task, args=(index,))
             th.append(thread)
+
         intentos=[]
+        espera = []
         for index in range(0, index_devices):
             intentos.append(0)
+            espera.append(SHORT_WAIT)
             th[index].start()
+            th[index].join()
             time.sleep(1)
 
     except:
-       print("eRRor")
+        print("eRRor")
 
     finally:
         for index in range(0, index_devices):

@@ -119,3 +119,8 @@ def main():
         if local_device is not None and local_device.is_open():
             local_device.close()
         sys._clear_type_cache()
+
+
+
+if __name__ == '__main__':
+    main()

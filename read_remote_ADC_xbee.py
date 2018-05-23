@@ -34,7 +34,8 @@ IOLINE_IN_2 = IOLine.DIO2_AD2
 IOLINE_IN_1 = IOLine.DIO1_AD1
 IOLINE_IN_0 = IOLine.DIO0_AD0
 MAX_VOLTAGE_INPUT = 1200
-MAX_INTENTOS = 10 # número máximo de intentos de comunicación
+MAX_INTENTOS = 3 # número máximo de intentos de comunicación
+MAX_TIMEOUTS = 10 # Si un nodo da muchos timeotus hay un problema y lo eliminamos de la red
 
 
 def ntc10k_calculate_temp(raw_value, volts):
@@ -68,13 +69,41 @@ def main():
     # configura las entradas de los módulos
     #configuro nodos:
     #nodo 1:
-    remote_device1 = xbee_network.discover_device("REMOTO_1")
+
+    try:
+        contador = 0
+        next = False
+        while contador < MAX_INTENTOS or next==True:
+            remote_device1 = xbee_network.discover_device("REMOTO_1")
+            if remote_device1 == None:
+                contador +=1
+                print (contador)
+            else:
+                next = True
+    except TimeoutException:
+        print ("fallo")
+
+
+
+
     #remote_device1.set_io_configuration(IOLINE_IN_0, IOMode.ADC)
     #remote_device1.set_io_configuration(IOLINE_IN_1, IOMode.ADC)
     #remote_device1.set_io_configuration(IOLINE_IN_2, IOMode.ADC)
     #remote_device1.set_io_configuration(IOLINE_IN_3, IOMode.ADC)
     # nodo 2:
-    remote_device2 = xbee_network.discover_device("REMOTO_2")
+    try:
+        contador = 0
+        next = False
+        while contador < MAX_INTENTOS or next==True:
+            remote_device2 = xbee_network.discover_device("REMOTO_1")
+            if remote_device2 == None:
+                contador +=1
+                print (contador)
+            else:
+                next = True
+    except TimeoutException:
+        print ("fallo")
+
     #remote_device2.set_io_configuration(IOLINE_IN_0, IOMode.ADC)
     #remote_device2.set_io_configuration(IOLINE_IN_1, IOMode.ADC)
     #remote_device2.set_io_configuration(IOLINE_IN_2, IOMode.ADC)
@@ -105,30 +134,30 @@ def main():
                 #Nodo 1:
                 # Leemos el valor del nodo para luego calcular el valor de la resistencia del termistor mediante la
                 # ley de Ohm para un divisor de tensión
-                    vcc = remote_device1.get_parameter("%V")
-                    vcc = int(utils.hex_to_string(vcc).replace(' ', ''), 16)
-                    time.sleep(0.1)
+                    #vcc = remote_device1.get_parameter("%V")
+                    #vcc = int(utils.hex_to_string(vcc).replace(' ', ''), 16)
+                    #time.sleep(0.1)
                 # Leemos el valor crudo de las entradas analógicas
-                    raw_value_1 = remote_device1.get_adc_value(IOLINE_IN_0)
-                    time.sleep(0.1)
-                    raw_value_2 = remote_device1.get_adc_value(IOLINE_IN_1)
-                    time.sleep(0.1)
-                    raw_value_3 = remote_device1.get_adc_value(IOLINE_IN_2)
-                    time.sleep(0.1)
-                    raw_value_4 = remote_device1.get_adc_value(IOLINE_IN_3)
-                    time.sleep(0.1)
+                    #raw_value_1 = remote_device1.get_adc_value(IOLINE_IN_0)
+                    #time.sleep(0.1)
+                    #raw_value_2 = remote_device1.get_adc_value(IOLINE_IN_1)
+                    #time.sleep(0.1)
+                    #raw_value_3 = remote_device1.get_adc_value(IOLINE_IN_2)
+                    #time.sleep(0.1)
+                    #raw_value_4 = remote_device1.get_adc_value(IOLINE_IN_3)
+                    #time.sleep(0.1)
                 # Calculamos el valor de temperatura en cada entrada en función de la tensión de alimentación y del
                 # valor crudo
-                    tntc_1 = ntc10k_calculate_temp(raw_value_1, vcc)
-                    tntc_2 = ntc10k_calculate_temp(raw_value_2, vcc)
-                    tntc_3 = ntc10k_calculate_temp(raw_value_3, vcc)
-                    tntc_4 = ntc10k_calculate_temp(raw_value_4, vcc)
+                    #tntc_1 = ntc10k_calculate_temp(raw_value_1, vcc)
+                    #tntc_2 = ntc10k_calculate_temp(raw_value_2, vcc)
+                    #tntc_3 = ntc10k_calculate_temp(raw_value_3, vcc)
+                    #tntc_4 = ntc10k_calculate_temp(raw_value_4, vcc)
                 # ************************************************************************
                 # ESTA ES LA PARTE DE TELEGRAF
-                    send_data_to_telegraf.main("REMOTO_1", tntc_1, tntc_2, tntc_3, tntc_4, float(vcc))
-                    print("")
+                    #send_data_to_telegraf.main("REMOTO_1", tntc_1, tntc_2, tntc_3, tntc_4, float(vcc))
+                    #print("")
                     # Esperamos hasta la siguiente toma de muestras
-                    time.sleep(1)
+                    #time.sleep(1)
                 #Ndodo 2:
                     vcc = remote_device2.get_parameter("%V")
                     time.sleep(0.1)
