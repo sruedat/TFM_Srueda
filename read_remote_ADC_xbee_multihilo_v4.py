@@ -11,7 +11,7 @@ import sys
 import threading
 import time
 
-import read_node_list
+
 from datetime import datetime
 
 import read_sys_config

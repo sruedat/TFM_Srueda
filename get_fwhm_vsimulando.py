@@ -3,8 +3,6 @@ import json
 import urllib.request
 import datetime
 import time
-import logging
-import send_data_to_telegraf
 
 FILTER_LAMBDA = {'J0430': 430, 'gSDSS': 475, 'rSDSS': 625, 'iSDSS': 773, 'J0861': 861, 'zSDSS': 915, 'uJAVA': 348,
                  'J0378': 378, 'J0395': 395, 'J0410': 410, 'J0515': 515, 'J0660': 660}
@@ -54,7 +52,7 @@ def get_seeing_at(timestamp, seeing):
 
     s_data.sort()
 
-    return s_data[int(len(s_data) / 2)]
+    return s_data[len(s_data) % 2]
 
 
 def get_expected_psf(img, seeing):
@@ -78,7 +76,6 @@ def query_images_since(timestamp, url='http://upad.oaj.cefca.es/reduction/t80com
                'filter': cur[4], 'airmass': float(cur[5]),
                'insertdate': datetime.datetime.strptime(cur[6], '%Y-%m-%dT%H:%M:%S')}
 
-
         img['expected_psf'] = get_expected_psf(img, seeing)
 
         result.append(img)
@@ -87,33 +84,67 @@ def query_images_since(timestamp, url='http://upad.oaj.cefca.es/reduction/t80com
 
 
 if __name__ == '__main__':
+    #Se introducen imágenes repetidas
     last_img=[]
+    #para simulador de horas
+    fecha_inicio=datetime
+    fecha_inicio.datetime.year=2018
+    fecha_inicio.datetime.mes=5
+    fecha_inicio.datetime.dia=12
+    fecha_inicio.datetime.hora=22
+    fecha_inicio.datetime.minuto=0
     while (True):
         # get actual date
-        now=datetime.datetime.now()
-        print(now.hour)
-        #Solo hacemos pool a la BD en horas de observación
-        if now.hour>19 or now.hour<8: #cambiar 14 por 8
-            result = query_images_since(datetime.datetime(now.year, now.month, now.day, now.hour, now.minute))
-            #result = query_images_since(datetime.datetime(2018, 5, 18, 0, 6))
-            if len(result) > 0:
-                print ('Total %d' % len(result))
-                print(len(result))
-                for i in range (len(result)):
-                    img = result[i]
-                    print('Image %s' % i)
-                    print('   name: %s' % img['name'])
-                    print('   filter %s' % img['filter'])
-                    print('   timestamp: %s' % img['timestamp'])
-                    print('   fwhmg (PSF): %s' % img['fwhmg'])
-                    print('   expected_psf: %s' % img['expected_psf'])
-                    send_data_to_telegraf.send_fwhm(float(img['fwhmg']))
+        #now=datetime.datetime.now()
+        #SIMULADOR TIEMPO
+        now = datetime.datetime.now() + datetime.timedelta(minutes=5)
+        print(now)
 
-            else:
-                print('No new imagenes available')
-                # de momento mandamos un 0.0
-                #send_data_to_telegraf.send_fwhm(0.0)
-        time.sleep (200)
+        # get data
+        result = query_images_since(datetime.datetime(now.year, now.month, now.day, now.hour, now.minute))
+        #result = query_images_since(datetime.datetime(2018, 5, 18, 22, 0))
+
+        # Esto sólo es para comprobar si funciona bien
+        # Borrarrrrrrr
+        if len(result) > 0:
+            print("Total", len(result))
+            print(result)
+            #for i in range(len(result)):
+            #    img = result[i]
+            #    print("Image %s" % i)
+            #    print("   name:", img['name'])
+            #    print("   filter:", img['filter'])
+            #    print("   timestamp:", img['timestamp'])
+            #    print("   fwhmg (PSF):", img['fwhmg'])
+            #    print("   expected_psf:", img['expected_psf'])
+
+        #####################################################################
+
+        # if there are data
+        if len(result)>0:
+            if len(last_img)>0:
+            #delete images already introduced
+                for i in range (len(last_img)):
+                    for e in range (len(result)):
+                        if last_img[i]==result[e]:
+                            #print ("repetidas: %s" % result[e])
+                            result.remove(result[e])
+                            break
+
+
+            print("Total nuevas", len(result))
+            for i in range (len(result)):
+                img = result[i]
+                print("Image %s" % i)
+                print("   name:", img['name'])
+                print("   filter:", img['filter'])
+                print("   timestamp:", img['timestamp'])
+                print("   fwhmg (PSF):", img['fwhmg'])
+                print("   expected_psf:", img['expected_psf'])
+            last_img = result
+        else:
+            print('No new imagenes available')
+        time.sleep (300)
 
 
 

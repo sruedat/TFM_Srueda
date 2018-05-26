@@ -22,6 +22,7 @@ import time, sys, argparse
 import read_sys_config
 from digi.xbee.models.status import NetworkDiscoveryStatus
 from digi.xbee.devices import XBeeDevice
+import telegraf
 sys.tracebacklimit = 0
 
 # Se admiten parámetros de depuración para la invocacción directa del módulo

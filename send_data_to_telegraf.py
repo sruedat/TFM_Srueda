@@ -3,6 +3,11 @@ import time
 
 DB_ADDR='192.168.1.44'
 DB_PORT=8094
+
+def send_fwhm(fwhm):
+    client = TelegrafClient(host=DB_ADDR, port=DB_PORT, tags={'host': 'CPD'})
+    client.metric('FWHM', {'C080': fwhm})
+
 def main(nodo,t1,t2,t3,t4,vcc):
     client = TelegrafClient(host=DB_ADDR, port=DB_PORT, tags={'host':nodo})
     #seeing_simulado = round(random.uniform(0.4, 1.9), 2)
