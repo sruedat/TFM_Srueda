@@ -1,16 +1,18 @@
-# Copyright 2018, Sergio Rueda.
-#
-# Permission to use, copy, modify, and/or distribute this software for any
-# purpose with or without fee is hereby granted, provided that the above
-# copyright notice and this permission notice appear in all copies.
-#
-# THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
-# WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
-# MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
-# ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
-# WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
-# ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
-# OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+# Sergio Rueda Teruel. 2018
+# Este software ha sido desarrollado para el trabajo fin de master de la titulación
+# Máster Universitario en Ingeniería de Telecomunicación UOC-URL de la
+# Universidad Oberta de Catalunya y lleva por título
+# "Diseño de una WSN para la estimación del seeing de la cúpula D080,
+# en el Observatorio Astrofísico de Javalambre."
+# Para la realización de este código se han utilizado las librerías Python
+# que la empresa Digi (Digi International Inc.) proporciona en su página web
+# (https://www.digi.com/blog/xbee/introducing-the-official-digi-xbee-python-library/)
+# este código está sometido a licencia de Reconocimiento-NoComercial-CompartirIgual
+# 3.0 España de Creative Commons.
+
+# Este módulo se utiliza para la lectura de los parámetros de configuración a través del
+# puerto serie del nodo local. Muestra los datos por pantalla y crea un log que puede ser
+# recogido por otros módulos para su visualización. (Módulo gui.py en este proyecto)
 
 
 from digi.xbee.devices import XBeeDevice
@@ -270,143 +272,7 @@ def main():
         log = log + " Hardware Version:            %s" % HV + "\n"
         log = log + " Association Indication:      %s" % AI + "\n"
         log = log + " RSSI of Last Packet:         %s" % DB + "\n"
-        log = log + " Supply Votage:               %s" % V + "\n\n"
-        print (log)
-        '''
-        #print(" +-----------------------------+")
-        #print(" | Networking                  |")
-        print(" ZigBee Stack Profile:        %s" % ZS)
-        print(" Node Join Time:              %s" % NJ)
-        print(" +-----------------------------+")
-        print(" PAN ID:                      %s" % ID)
-        print(" Scan Channel:                %s" % SC)
-        print(" Scan Duration:               %s" % SD)
-        print(" Network Watchdog Timeout:    %s" % NW)
-        print(" Channel Verification:        %s" % JV)
-        print(" Join Notification:           %s" % JN)
-        print(" Operating PAN ID:            %s" % OP)
-        print(" Operating 16-bit PAN ID:     %s" % OI)
-        print(" Operating Channel:           %s" % CH)
-        print(" Number of Remaining Children:%s" % NC)
-        print(" Coordinator Enable:          %s" % CE)
-        print(" Device Options:              %s" % DO)
-        print(" Device Controls:             %s" % DC + "\n")
 
-        print(" +-----------------------------+")
-        print(" | Addressing                  |")
-        print(" +-----------------------------+")
-        print(" Serial Number High:          %s" % SH)
-        print(" Serial Number Low:           %s" % SL)
-        print(" 16-bit Network Address:      %s" % MY)
-        print(" 16-bit Parent Address:       %s" % MP)
-        print(" Destination Address High:    %s" % DH)
-        print(" Destination Address Low:     %s" % DL)
-        print(" Node Identifier:             %s" % NI)
-        print(" Maximum Hops:                %s" % NH)
-        print(" Broadcast Radius:            %s" % BH)
-        print(" Many-to-One Route Bro. Time: %s" % AR)
-        print(" Device Type Identifier:      %s" % DD)
-        print(" Node Discovery Backoff:      %s" % NT)
-        print(" Node Discovery Options:      %s" % NO)
-        print(" Maximum Num.Trans. Bytes:    %s" % NP)
-        print(" PAN Conflict Threshold:      %s" % CR + "\n")
-
-        print(" +-----------------------------+")
-        print(" | ZigBee Addressing           |")
-        print(" +-----------------------------+")
-        print(" Zigbee Source Endpoint:      %s" % SE)
-        print(" Zigbee Destination Endpoint: %s" % DE)
-        print(" Zigbee Cluster ID:           %s" % CI)
-        print(" Transmit Options:            %s" % TO + "\n")
-
-        print(" +-----------------------------+")
-        print(" | RF Interfacing              |")
-        print(" +-----------------------------+")
-        print(" Tx Power Level:              %s" % PL)
-        print(" Power Mode:                  %s" % PM)
-        print(" Power at PL4:                %s" % PP + "\n")
-
-        print(" +-----------------------------+")
-        print(" | Security                    |")
-        print(" +-----------------------------+")
-        print(" Encryption Enable:           %s" % EE)
-        print(" Encryption Options:          %s" % EO)
-        print(" Encryption Key:              %s" % KY)
-        print(" Network Encryption Key:      %s" % NK + "\n")
-
-        print(" +-----------------------------+")
-        print(" | Serial Interfacing          |")
-        print(" +-----------------------------+")
-        print(" Baud Rate:                   %s" % BD)
-        print(" Parity:                      %s" % NB)
-        print(" Stop Bits:                   %s" % SB)
-        print(" Packetization Timeout:       %s" % RO)
-        print(" DIO6/nRTS Configuration  :   %s" % D6)
-        print(" DIO7/nCTS Configuration:     %s" % D7)
-        print(" API Enable:                  %s" % AP)
-        print(" API Output Mode:             %s" % AO + "\n")
-
-        print(" +-----------------------------+")
-        print(" | AT Command Options          |")
-        print(" +-----------------------------+")
-        print(" AT Command Mode Timeout:     %s" % CT)
-        print(" Guard Times:                 %s" % GT)
-        print(" Command Sequence Character:  %s" % CC + "\n")
-
-        print(" +-----------------------------+")
-        print(" | Sleep Modes                 |")
-        print(" +-----------------------------+")
-        print(" Cyclic Sleep Period:         %s" % SP)
-        print(" Number of Cyclic Sleep Per.: %s" % SN)
-        print(" Sleep Mode:                  %s" % SM)
-        print(" Time Before Sleep:sss        %s" % ST)
-        print(" Sleep Options:               %s" % SO)
-        print(" Wake Hosts:                  %s" % WH)
-        print(" Poll Rate:                   %s" % PO + "\n")
-
-        print(" +-----------------------------+")
-        print(" | I/O Settings                |")
-        print(" +-----------------------------+")
-        print(" DIO0/ADO/CB Configuration:   %s" % D0)
-        print(" DIO1/AD1 Configuration:      %s" % D1)
-        print(" DIO2/AD2 Configuration:      %s" % D2)
-        print(" DIO3/AD3 Configuration:      %s" % D3)
-        print(" DIO4 Configuration:          %s" % D4)
-        print(" DIO5 Configuration:          %s" % D5)
-        print(" DIO8 Configuration:          %s" % D8)
-        print(" DIO9 Configuration:          %s" % D9)
-        print(" DIO10 Configuration:         %s" % P0)
-        print(" DIO11 Configuration:         %s" % P1)
-        print(" DIO12 Configuration:         %s" % P2)
-        print(" DIO13 Configuration:         %s" % P3)
-        print(" DIO14 Configuration:         %s" % P4)
-        if HV == Hardware_Extended:
-            print(" DIO15 Configuration:         %s" % P5)
-            print(" DIO16 Configuration:         %s" % P6)
-            print(" DIO17 Configuration:         %s" % P7)
-            print(" DIO18 Configuration:         %s" % P8)
-            print(" DIO19 Configuration:         %s" % P9)
-        print(" Pull-UP Resistor Enable:     %s" % PR)
-        print(" Pull-Up/down Direction:      %s" % PD)
-        print(" Associate LED Blink Time:    %s" % LT)
-        print(" RSSI PWM Timer:              %s" % RP + "\n")
-
-        print(" +-----------------------------+")
-        print(" | I/O Sampling                |")
-        print(" +-----------------------------+")
-        print(" IO Sampling Rate:            %s" % IR)
-        print(" Digital IO Change Detection: %s" % IC)
-        print(" Supply Votage High Thres.:   %s" % Vplus + "\n")
-
-        print(" +-----------------------------+")
-        print(" | Diagnostic Commands         |")
-        print(" +-----------------------------+")
-        print(" Firmaware Version:           %s" % VR)
-        print(" Hardware Version:            %s" % HV)
-        print(" Association Indication:      %s" % AI)
-        print(" RSSI of Last Packet:         %s" % DB)
-        print(" Supply Votage:               %s" % V + "\n")
-'''
     except:
         if local_device.is_open():
             local_device.close()
@@ -424,3 +290,5 @@ def main():
 
 if __name__ == '__main__':
     main()
+    log = log + " Supply Votage:               %s" % V + "\n\n"
+    print (log)

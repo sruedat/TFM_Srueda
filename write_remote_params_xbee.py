@@ -1,17 +1,17 @@
-# Copyright 2018, Sergio Rueda.
-#
-# Permission to use, copy, modify, and/or distribute this software for any
-# purpose with or without fee is hereby granted, provided that the above
-# copyright notice and this permission notice appear in all copies.
-#
-# THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
-# WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
-# MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
-# ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
-# WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
-# ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
-# OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+# Sergio Rueda Teruel. 2018
+# Este software ha sido desarrollado para el trabajo fin de máster de la titulación
+# Máster Universitario en Ingeniería de Telecomunicación UOC-URL de la
+# Universidad Oberta de Catalunya y lleva por título
+# "Diseño de una WSN para la estimación del seeing de la cúpula D080,
+# en el Observatorio Astrofísico de Javalambre."
+# Para la realización de este código se han utilizado las librerías Python
+# que la empresa Digi (Digi International Inc.) proporciona en su página web
+# (https://www.digi.com/blog/xbee/introducing-the-official-digi-xbee-python-library/)
+# este código está sometido a licencia de Reconocimiento-NoComercial-CompartirIgual
+# 3.0 España de Creative Commons.
 
+# Este módulo se utiliza para la escritura de los parámetros de configuración a través de
+# RF de un nodo remoto, dicha escritura se hace a través del nodo local.
 
 from digi.xbee.devices import XBeeDevice
 from digi.xbee.devices import RemoteZigBeeDevice
@@ -51,7 +51,6 @@ def main(Node_Address):
         print("0013A200416299FE")
         read_node_config_file.set_path_to_file(Node_Address)
         #No se puede modificar la PAN ID vía RF porque se pierde conexión
-        #remote_device.set_parameter("ID",utils.hex_string_to_bytes(SysConfig.ReadScanChannelsFromFile(Node_Address)))
 
         print(read_node_config_file.ReadScanChannelsFromFile(Node_Address))
         remote_device.set_parameter("SC", utils.hex_string_to_bytes(read_node_config_file.ReadScanChannelsFromFile(Node_Address)))
@@ -87,8 +86,7 @@ def main(Node_Address):
         remote_device.set_parameter("EE", utils.hex_string_to_bytes(read_node_config_file.ReadEncryptionEnableFromFile(Node_Address)))
         remote_device.set_parameter("EO", utils.hex_string_to_bytes(read_node_config_file.ReadEncryptionOptionsFromFile(Node_Address)))
         # No se pueden cambiar las keys vía RF
-        #remote_device.set_parameter("KY",utils.hex_string_to_bytes(SysConfig.ReadEncryptionKeyFromFile(Node_Address)))
-        #remote_device.set_parameter("NK",utils.hex_string_to_bytes(SysConfig.ReadNetworkEncryptionKeyFromFile(Node_Address)))
+
         # Serial Interfacing
         remote_device.set_parameter("BD", utils.hex_string_to_bytes(read_node_config_file.ReadBaudRateFromFile(Node_Address)))
         remote_device.set_parameter("NB", utils.hex_string_to_bytes(read_node_config_file.ReadParityFromFile(Node_Address)))

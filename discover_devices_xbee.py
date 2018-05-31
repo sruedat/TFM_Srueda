@@ -1,18 +1,14 @@
 # Sergio Rueda Teruel. 2018
-# Este sofware ha sido desarrollado para el trabajo fin de master de la titulación
-# Máster Unviersitario en Ingeniería de TElecomuniación UOC-URL de la
-# Universisdad Oberta de Catalunya y lleva por título
-# "Diseño de una WSN para la estimación del seein de l cúpla D080,
+# Este software ha sido desarrollado para el trabajo fin de master de la titulación
+# Máster Universitario en Ingeniería de Telecomunicación UOC-URL de la
+# Universidad Oberta de Catalunya y lleva por título
+# "Diseño de una WSN para la estimación del seeing de la cúpula D080,
 # en el Observatorio Astrofísico de Javalambre."
-
-# Para la realización de este código se han utilizado las librerías python
+# Para la realización de este código se han utilizado las librerías Python
 # que la empresa Digi (Digi International Inc.) proporciona en su página web
 # (https://www.digi.com/blog/xbee/introducing-the-official-digi-xbee-python-library/)
-
-# este código está sometído a licencia de Reconocimiento-NoComercial-CompartirIgual
+# este código está sometido a licencia de Reconocimiento-NoComercial-CompartirIgual
 # 3.0 España de Creative Commons.
-
-
 
 # Este módulo se utiliza para descubrir equipos remotos conectados a la misma red (PAN ID)
 # que el equipo local, es desde este equipo local desde el que se realizan las tareas de
@@ -22,7 +18,6 @@ import time, sys, argparse
 import read_sys_config
 from digi.xbee.models.status import NetworkDiscoveryStatus
 from digi.xbee.devices import XBeeDevice
-import telegraf
 sys.tracebacklimit = 0
 
 # Se admiten parámetros de depuración para la invocacción directa del módulo
@@ -38,8 +33,8 @@ baud_rate = read_sys_config.ReadLocalBaudRateFromFile()
 
 
 
-# La varible log será utilizada para ir registrando el avnace de todo el proceso
-# y se devolvera en el procedimiento passlog para que pueda ser leida accedida
+# La variable log será utilizada para ir registrando el avnace de todo el proceso
+# y se devolverá en el procedimiento passlog para que pueda ser leída accedida
 # por otros módulos
 log=""
 
@@ -66,17 +61,18 @@ def main():
 
         xbee_network = local_device.get_network()
 
-        xbee_network.set_discovery_timeout(15)  # 15 seconds.
+        xbee_network.set_discovery_timeout(15)  # 15 segundos
 
         xbee_network.clear()
 
-        # Callback for discovered devices.
+        # Callback para los dispositivos descubiertos
         def callback_device_discovered(remote):
             global log
             log =log+"Device discovered:\n" + "%s" % remote +"\n\n"
             if args.verbose:
                 print("Device discovered: " + "%s" % remote)
-        # Callback for discovery finished.
+
+        # Callback para la finalización del proceso de descubrimiento
         def callback_discovery_finished(status):
             global log
             if status == NetworkDiscoveryStatus.SUCCESS:
@@ -105,6 +101,7 @@ def main():
             passlog()
             time.sleep(0.1)
 
+        # Si es invocado por otros módulos devuleve un 1 indicando que ya ha acabado la fase de descubrimiento
         state = 1
         return state
 
@@ -114,7 +111,7 @@ def main():
             local_device.close()
         pass
 
-        # Si es invocado por otros módulos devuleve un 1 indicando que ya ha acabdo la fase de descubrimiento
+
 
     finally:
         if local_device is not None and local_device.is_open():

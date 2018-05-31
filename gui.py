@@ -1,23 +1,16 @@
 # Sergio Rueda Teruel. 2018
-# Este sofware ha sido desarrollado para el trabajo fin de master de la titulación
-# Máster Unviersitario en Ingeniería de TElecomuniación UOC-URL de la
-# Universisdad Oberta de Catalunya y lleva por título
-# "Diseño de una WSN para la estimación del seein de l cúpla D080,
+# Este software ha sido desarrollado para el trabajo fin de máster de la titulación
+# Máster Universitario en Ingeniería de Telecomunicación UOC-URL de la
+# Universidad Oberta de Catalunya y lleva por título
+# "Diseño de una WSN para la estimación del seeing de la cúpula D080,
 # en el Observatorio Astrofísico de Javalambre."
-
-# Para la realización de este código se han utilizado las librerías python
-# que la empresa Digi (Digi International Inc.) proporciona en su página web
-# (https://www.digi.com/blog/xbee/introducing-the-official-digi-xbee-python-library/)
-
-# este código está sometído a licencia de Reconocimiento-NoComercial-CompartirIgual
+# Este código está sometido a licencia de Reconocimiento-NoComercial-CompartirIgual
 # 3.0 España de Creative Commons.
 
-
-
-# Este módulo se utiliza para la creacción de la interface gráfica con la que gestionar
+# Este módulo se utiliza para la creación de la interface gráfica con la que gestionar
 # toda la red, permite leer la configuración del nodo local, la configuración de nodos
-# remotos indicándo su dirección. Además tambiénpermite escibir la configuración del nodo
-# local y/o remotos mediante sus correspondientes archivos de configuración
+# remotos indicando su dirección. Además, también permite escribir la configuración del
+# nodo local y/o remotos mediante sus correspondientes archivos de configuración
 
 import tkinter as tk
 from tkinter import ttk

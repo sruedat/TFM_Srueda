@@ -1,16 +1,16 @@
-# Copyright 2018, Sergio Rueda.
-#
-# Permission to use, copy, modify, and/or distribute this software for any
-# purpose with or without fee is hereby granted, provided that the above
-# copyright notice and this permission notice appear in all copies.
-#
-# THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
-# WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
-# MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
-# ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
-# WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
-# ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
-# OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+# Sergio Rueda Teruel. 2018
+# Este software ha sido desarrollado para el trabajo fin de máster de la titulación
+# Máster Universitario en Ingeniería de Telecomunicación UOC-URL de la
+# Universidad Oberta de Catalunya y lleva por título
+# "Diseño de una WSN para la estimación del seeing de la cúpula D080,
+# en el Observatorio Astrofísico de Javalambre."
+# Este código está sometido a licencia de Reconocimiento-NoComercial-CompartirIgual
+# 3.0 España de Creative Commons.
+
+# Este módulo incorpora una serie de funciones que son llamadas por otros módulos para
+# la lectura de los parámetros de configuración del puerto serie.
+# También se indica que versión de hardware presenta entradas P5 a P9, ya que no todas
+# las versiones de hardware lo hacen
 
 
 import configparser

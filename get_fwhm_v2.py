@@ -1,11 +1,31 @@
+# Sergio Rueda Teruel. 2018
+# Este software ha sido desarrollado para el trabajo fin de master de la titulación
+# Máster Universitario en Ingeniería de Telecomunicación UOC-URL de la
+# Universidad Oberta de Catalunya y lleva por título
+# "Diseño de una WSN para la estimación del seeing de la cúpula D080,
+# en el Observatorio Astrofísico de Javalambre."
+
+# Para la realización de este código se han utilizado las recomendaciones y utilidades
+# que los ingenieros de bases de datos del OAJ han desarrollado.
+# Agradecer la ayuda de Javier Hernández su ayuda en la elaboración de módulo
+
+# Este código está sometido a licencia de Reconocimiento-NoComercial-CompartirIgual
+# 3.0 España de Creative Commons.
+
+# Este módulo se utiliza para consultar a la base de datos del centro de cálculo sobre
+# el valor de FWHM de las imágenes capturadas, esta consulta es periodica, y lo que se
+#hace es una query que devuelva los cálculos de las imágnes desde unos segundos antes
+#(TIEMPO_ESPERA) hasta el momento actual
+
+
 import math
 import json
 import urllib.request
 import datetime
 import time
-import logging
 import send_data_to_telegraf
 
+TIEMPO_ESPERA=60
 FILTER_LAMBDA = {'J0430': 430, 'gSDSS': 475, 'rSDSS': 625, 'iSDSS': 773, 'J0861': 861, 'zSDSS': 915, 'uJAVA': 348,
                  'J0378': 378, 'J0395': 395, 'J0410': 410, 'J0515': 515, 'J0660': 660}
 FILTER_ZP = {'uJAVA': 21.80, 'J0378': 21.00, 'J0395': 20.80, 'J0410': 21.64, 'J0430': 21.61, 'gSDSS': 23.70,
@@ -16,6 +36,7 @@ FROM t80oa oa JOIN rc ON oa.id = rc.ori_id join filter f ON oa.filter_id = f.id 
 AND oa.date >= DATE('{0}') AND oa.time > TIME('{1}') ORDER BY 2"""
 
 SQL_SEEING = """SELECT datetime, seeing FROM seeing.seeingdata WHERE datetime >= TIMESTAMP(DATE('{0}'), TIME('{1}')) AND flag = 0 ORDER BY 1"""
+
 
 
 def query_adql_by_http(query, url):
@@ -33,7 +54,6 @@ def get_seeing_data(timestamp, url):
     Query for the available 'seeing' data form five minutes before the 'timestamp'.
     """
     t2 = (timestamp - datetime.timedelta(minutes=5)).isoformat()
-
     sql = SQL_SEEING.format(t2[:10], t2[11:16])
     res = query_adql_by_http(sql, url)
 
@@ -91,11 +111,13 @@ if __name__ == '__main__':
     while (True):
         # get actual date
         now=datetime.datetime.now()
-        print(now.hour)
-        #Solo hacemos pool a la BD en horas de observación
-        if now.hour>19 or now.hour<8: #cambiar 14 por 8
+        #restamos unos segundos al tiempo actual para utilizarlo como timestamp de la consulta
+        now=now-datetime.timedelta(seconds=TIEMPO_ESPERA)
+
+        #Evitamos hacer pool a la BD por la mañana cuando no hay actividad científica y por tanto no hay FWHM
+        if now.hour>16 or now.hour<10:
             result = query_images_since(datetime.datetime(now.year, now.month, now.day, now.hour, now.minute))
-            #result = query_images_since(datetime.datetime(2018, 5, 18, 0, 6))
+            #result = query_images_since(datetime.datetime(2018, 5, 18, 22, 6))
             if len(result) > 0:
                 print ('Total %d' % len(result))
                 print(len(result))
@@ -107,16 +129,12 @@ if __name__ == '__main__':
                     print('   timestamp: %s' % img['timestamp'])
                     print('   fwhmg (PSF): %s' % img['fwhmg'])
                     print('   expected_psf: %s' % img['expected_psf'])
+                    #print(time.mktime(img['timestamp'].timetuple()))
+                    #send_data_to_telegraf.send_fwhm(float(img['fwhmg']),time.mktime(img['timestamp'].timetuple()))
+                    time.sleep(20)
                     send_data_to_telegraf.send_fwhm(float(img['fwhmg']))
 
             else:
                 print('No new imagenes available')
-                # de momento mandamos un 0.0
-                #send_data_to_telegraf.send_fwhm(0.0)
-        time.sleep (200)
-
-
-
-
-
-
+        #esperamos unos segundos antes de volver a preguntar
+        time.sleep (TIEMPO_ESPERA)

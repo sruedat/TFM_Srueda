@@ -1,16 +1,17 @@
-# Copyright 2018, Sergio Rueda.
-#
-# Permission to use, copy, modify, and/or distribute this software for any
-# purpose with or without fee is hereby granted, provided that the above
-# copyright notice and this permission notice appear in all copies.
-#
-# THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
-# WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
-# MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
-# ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
-# WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
-# ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
-# OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+# Sergio Rueda Teruel. 2018
+# Este software ha sido desarrollado para el trabajo fin de master de la titulación
+# Máster Universitario en Ingeniería de Telecomunicación UOC-URL de la
+# Universidad Oberta de Catalunya y lleva por título
+# "Diseño de una WSN para la estimación del seeing de la cúpula D080,
+# en el Observatorio Astrofísico de Javalambre."
+# Para la realización de este código se han utilizado las librerías Python
+# que la empresa Digi (Digi International Inc.) proporciona en su página web
+# (https://www.digi.com/blog/xbee/introducing-the-official-digi-xbee-python-library/)
+# este código está sometido a licencia de Reconocimiento-NoComercial-CompartirIgual
+# 3.0 España de Creative Commons.
+
+# Este módulo se utiliza para la escritura de los parámetros de configuración a través del
+# puerto serie del nodo local.
 
 
 from digi.xbee.devices import XBeeDevice
@@ -117,7 +118,7 @@ def main(NodeAddress):
         local_device.set_parameter("P2", utils.hex_string_to_bytes(read_node_config_file.ReadDIO12ConfigurationFromFile(NodeAddress)))
         local_device.set_parameter("P3", utils.hex_string_to_bytes(read_node_config_file.ReadDIO13ConfigurationFromFile(NodeAddress)))
         local_device.set_parameter("P4", utils.hex_string_to_bytes(read_node_config_file.ReadDIO14ConfigurationFromFile(NodeAddress)))
-        if HV == Hardware_Extended:
+        if HV == Hardware_Extended: # Not all hardware have this inputs
             local_device.set_parameter("P5", utils.hex_string_to_bytes(read_node_config_file.ReadDIO15ConfigurationFromFile(NodeAddress)))
             local_device.set_parameter("P6", utils.hex_string_to_bytes(read_node_config_file.ReadDIO16ConfigurationFromFile(NodeAddress)))
             local_device.set_parameter("P7", utils.hex_string_to_bytes(read_node_config_file.ReadDIO17ConfigurationFromFile(NodeAddress)))
