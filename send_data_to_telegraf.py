@@ -22,8 +22,7 @@ DB_PORT=8094
 # Envío de la metrica de fwhm con timestamp de la adquisición
 def send_fwhm_with_timestamp(fwhm, time):
     client = TelegrafClient(host=DB_ADDR, port=DB_PORT, tags={'host': 'CPD'})
-    client.metric('FWHM', {'time': time})
-    client.metric('FWHM', {'C080': fwhm})
+    client.metric('FWHM', {'C080': fwhm},timestamp=int(time*1000000000))
 
 # Envío de la metrica de fwhm el timestamp es el del momento de la inserción
 def send_fwhm(fwhm):

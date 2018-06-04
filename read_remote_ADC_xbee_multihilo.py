@@ -1,92 +1,102 @@
-# Copyright 2017, Digi International Inc.
-#
-# Permission to use, copy, modify, and/or distribute this software for any
-# purpose with or without fee is hereby granted, provided that the above
-# copyright notice and this permission notice appear in all copies.
-#
-# THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
-# WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
-# MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
-# ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
-# WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
-# ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
-# OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+# Sergio Rueda Teruel. 2018
+# Este software ha sido desarrollado para el trabajo fin de master de la titulación
+# Máster Universitario en Ingeniería de Telecomunicación UOC-URL de la
+# Universidad Oberta de Catalunya y lleva por título
+# "Diseño de una WSN para la estimación del seeing de la cúpula D080,
+# en el Observatorio Astrofísico de Javalambre."
+# Para la realización de este código se han utilizado las librerías Python
+# que la empresa Digi (Digi International Inc.) proporciona en su página web
+# (https://www.digi.com/blog/xbee/introducing-the-official-digi-xbee-python-library/)
+# este código está sometido a licencia de Reconocimiento-NoComercial-CompartirIgual
+# 3.0 España de Creative Commons.
+
+# Este módulo se utiliza para la lectura de los valores de las entradas de los nodos
+# xbee remotos periódicamente, para ello se crea un hilo por cada nodo y se les va
+# encuestando, para mayor estabilidad cada nodo hilo bloquea a los demas y así no se
+# desborda el buffer del nodo colector.
+# Antes de empezar a encuestar a los nodos se realiza un procedimiento de descubrimiento
+# de cada uno de los nodos listados en el archivo de configuración list_of_nodes.ini
+# Si un nodo no responde a una petición se le empieza a encuestar a mayor frecuencia
+# para determinar si ha sido un fallo temporal o un fallo permanente, en caso de que el
+# número de fallos seguidos supere un cierto valor hace que se considere al nodo en fallo
+# y se deje de encuestarlo.
+
 
 from digi.xbee.devices import XBeeDevice
 from digi.xbee.io import IOLine, IOMode
 from digi.xbee.util import utils
 from digi.xbee.exception import TimeoutException
+
+import logging
+import sys
+import threading
+import time
+
 from datetime import datetime
-import time, sys, threading, math
+
 import read_sys_config
 import read_node_list
 import send_data_to_telegraf
 
-sys.tracebacklimit = 0
+
+REMOTE_NODES_ID = read_node_list.ReadListOfNodesFromFile()
+MAX_INTENTOS_DESCUBRIMIENTO = 3 # Número de intentos de descubrimiento de cada nodo
+MAX_INTENTOS_LEER_DATOS = 20 # Número máximo de fallos seguidos permitidos al leer
+                             # datos de un nodo.
+# Definición lineas de entrada
+IOLINE_IN_3 = IOLine.DIO3_AD3
+IOLINE_IN_2 = IOLine.DIO2_AD2
+IOLINE_IN_1 = IOLine.DIO1_AD1
+IOLINE_IN_0 = IOLine.DIO0_AD0
+# Tensión máxima en las entradas (mv)
+MAX_VOLTAGE_INPUT = 1200
+# Frecuencia de encuesta a los nodos en caso de que NO existan problemas (sg)
+LONG_WAIT=30
+# Frecuencia de encuesta a los nodos en caso de que SI existan problemas (sg)
+SHORT_WAIT=1
 
 # Parámetros de conexión con el puerto serie al dispositivo local
 port = read_sys_config.ReadLocalPortFromFile()
 baud_rate = read_sys_config.ReadLocalBaudRateFromFile()
 
-#REMOTE_NODE_ID = "REMOTO_1"
-REMOTE_NODES_ID = read_node_list.ReadListOfNodesFromFile()
-IOLINE_IN_3 = IOLine.DIO3_AD3
-IOLINE_IN_2 = IOLine.DIO2_AD2
-IOLINE_IN_1 = IOLine.DIO1_AD1
-IOLINE_IN_0 = IOLine.DIO0_AD0
-MAX_VOLTAGE_INPUT = 1200
-MAX_INTENTOS_DESCUBRIMIENTO = 3 # número máximo de intentos de descubrir a un nodo
-MAX_INTENTOS_LEER_DATOS = 10 # número máximo de intentos de descubrir a un nodo
-LONG_WAIT=30
-SHORT_WAIT=0.5
-
-
-
+# Función para calcular el valor de temperatura medainte el valor crudo de la
+# tensión de entrada y voltaje de alimentación (divisor de tensión)
 def ntc10k_calculate_temp(raw_value, volts):
     # mV
     voltage = (MAX_VOLTAGE_INPUT * raw_value / 1024)
     Rntc = 210000 * (voltage / (volts - voltage))
-    log=""
-    log=str(Rntc)
-    #AJUSTE_CUADRÁTICO
+    # AJUSTE_CUADRÁTICO (según curva calculada en Matlab)
     a=574.1
     b=-0.1242
     c= -158
     temperatureC =a*(pow(Rntc,b))+c
-
-    #AJUSTE LOGARÍTMCO
-    #temperatureC=-20.45*math.log1p(Rntc)+213.23
-
-    #AJUSTE POLINÓMICO ORDEN 5 (funciona peor)
-    #temperatureC = 4e-18*pow(Rntc,4) + 9e-13*pow(Rntc,3) + 8e-8*pow(Rntc,2) - 0.0034*Rntc + 52.479
-
-    log = log +" ntc 10K temper: %.2f" % temperatureC
-    print(log)
+    logging.debug('ntc 10K temper: %.2f',temperatureC)
     return temperatureC
 
 
-systembusy=False
+
 def main():
+    class ReadAD:
+        def __init__(self, start=0):
+            self.lock = threading.Lock()
+            self.value = start
 
-    def read_adc_task(indice):
-        while True or intentos[indice] < MAX_INTENTOS_LEER_DATOS:
+
+        def read_AD(self, indice):
+            logging.debug('Waiting for lock')
+            self.lock.acquire()
             try:
-                # Leemos el valor del nodo para luego calcular el valor de la resistencia del termistor mediante la
-                # ley de Ohm para un divisor de tensión
-                if systembusy == False:
-                    systembusy = True
-                    #time.sleep(1)
-                    vcc = nodos_activos[indice].get_parameter("%V")
-                    vcc = int(utils.hex_to_string(vcc).replace(' ', ''), 16)
+                self.timeout = False
+                logging.debug('Acquired lock')
+                vcc = nodos_activos[indice].get_parameter("%V")
+                vcc = int(utils.hex_to_string(vcc).replace(' ', ''), 16)
                 # Leemos el valor crudo de las entradas analógicas
-                    raw_value_1 = nodos_activos[indice].get_adc_value(IOLINE_IN_0)
-                    raw_value_2 = nodos_activos[indice].get_adc_value(IOLINE_IN_1)
-                    raw_value_3 = nodos_activos[indice].get_adc_value(IOLINE_IN_2)
-                    raw_value_4 = nodos_activos[indice].get_adc_value(IOLINE_IN_3)
-                # Calculamos el valor de temperatura en cada entrada en función de la tensión de alimentación y del
-                # valor crudo
+                raw_value_1 = nodos_activos[indice].get_adc_value(IOLINE_IN_0)
+                raw_value_2 = nodos_activos[indice].get_adc_value(IOLINE_IN_1)
+                raw_value_3 = nodos_activos[indice].get_adc_value(IOLINE_IN_2)
+                raw_value_4 = nodos_activos[indice].get_adc_value(IOLINE_IN_3)
 
-                print("Nodo %s" % nodos_activos[indice])
+                # Calculamos el valor de temperatura en cada entrada en función de la tensión de alimentación y del
                 tntc_1 = ntc10k_calculate_temp(raw_value_1, vcc)
                 tntc_2 = ntc10k_calculate_temp(raw_value_2, vcc)
                 tntc_3 = ntc10k_calculate_temp(raw_value_3, vcc)
@@ -94,86 +104,100 @@ def main():
 
                 # ************************************************************************
                 # ESTA ES LA PARTE DE TELEGRAF
-                intentos[indice]=0
-                print(str(datetime.now()))
                 send_data_to_telegraf.main(REMOTE_NODES_ID[indice], tntc_1, tntc_2, tntc_3, tntc_4, float(vcc))
-                systembusy = False
-                # Esperamos hasta la siguiente toma de muestras
-                espera = LONG_WAIT
-            #except TimeoutException as ex:
-            except:
-                intentos[indice] += 1
-                print (REMOTE_NODES_ID[indice])
-                print("ADC timeouts %s" % intentos)
-                systembusy = False
-                espera=SHORT_WAIT
-                if intentos[indice] > MAX_INTENTOS_LEER_DATOS:
-                    th[indice].join()
-                   # raise
-            #print("Espera: %s" % espera)
-            print("")
-            time.sleep(espera)
 
 
+            except TimeoutException:
+                self.timeout = True
+                logging.debug('ADC error')
+                local_device.reset()
+
+            finally:
+                self.lock.release()
+
+            return self.timeout
+
+# función que realiza las tareas de lectura de las entradas en los nodos
+    timeouts=[]
+    def worker(c,i):
+        #La petición se hace con tiempo variable, si no responde, esto es si da timeout se hacen más rápidas para ver
+        #si el nodo estaba en una secuencia de sueño, si sobre pasa el límite de timeouts cortos ya no se le pregunta más
+        timeouts.append(0)
+        try:
+            while True and (timeouts[i]< MAX_INTENTOS_LEER_DATOS):
+                logging.debug('Stamp: %s',  str(datetime.now()))
+                if c.read_AD(i):
+                    timeouts[i]+=1
+                    logging.debug("Timeouts %s", timeouts)
+                    pause=SHORT_WAIT
+                else:
+                    timeouts[i] = 0 #reseteamos la cuenta de timeouts
+                    pause = LONG_WAIT
+                logging.debug('Sleeping %0.02f', pause)
+                time.sleep(pause)
+        except ValueError:
+             logging.debug('Worker error')
+
+# función que realiza el procedimiento de descubrimiento de los nodos listado en el archivo list_of_nodes.ini
+    nodos_activos=[]
+    def descubre_nodos():
+        index_devices=0
+        try:
+            for index in range (0, len(REMOTE_NODES_ID)):
+                nodo_descubierto=False
+                intentos_descubir=0
+                while (nodo_descubierto != True)and intentos_descubir< MAX_INTENTOS_DESCUBRIMIENTO:
+                    remote_device=(xbee_network.discover_device(REMOTE_NODES_ID[index]))
+                    if remote_device is None:
+                        logging.debug('Could not find the remote device: %s', REMOTE_NODES_ID[index])
+                        intentos_descubir+=1
+                        logging.debug("Nodo: %s" , (REMOTE_NODES_ID[index]))
+                        logging.debug('Intentos descubrimiento restantes: %s', (MAX_INTENTOS_DESCUBRIMIENTO-intentos_descubir))
+                        time.sleep(1)
+                    else:
+                        nodos_activos.append(remote_device)
+                        index_devices+=1
+                        logging.debug('Descubierto: %s',remote_device)
+                        nodo_descubierto = True
+        except:
+            logging.debug('Error proceso descubrimiento')
 
 
+# Configuracíon de la salida del log
+    logging.basicConfig(
+        level=logging.DEBUG,
+        format='(%(threadName)-10s) %(message)s',
+    )
 
-
-    index_devices = 0
-    th = []
-    nodos_activos = []
-    intentos = []
-    print("Cantidad de nodos: %s" % len(REMOTE_NODES_ID))
-    print(" +----------------------------------------+")
-    print(" | XBee Python Read Remote ADC multi-hilo |")
-    print(" +----------------------------------------+\n")
+# Conexión al nodo local
+    local_device = XBeeDevice(port, baud_rate)
+    xbee_network = local_device.get_network()
+    local_device.open()
+    descubre_nodos()
 
     try:
-        local_device = XBeeDevice(port, baud_rate)
-        xbee_network = local_device.get_network()
-        local_device.open()
-
-
-        for index in range (0, len(REMOTE_NODES_ID)):
-            nodo_descubierto=False
-            intentos.append(0)
-            # Procedimiento de descubrimiento de nodos, ver que pasa si uno está apagado
-            while (nodo_descubierto != True)and intentos[index]<MAX_INTENTOS_DESCUBRIMIENTO:
-                remote_device=( xbee_network.discover_device(REMOTE_NODES_ID[index]))
-                if remote_device is None:
-                    print("Could not find the remote device: " + REMOTE_NODES_ID[index])  # ESTOY HAY QUE VER COMO SE HACE
-                    intentos [index]+=1
-                    print ("Nodo: %s" % (REMOTE_NODES_ID[index]))
-                    print ("Intentos descubrimiento restantes: %s" % (MAX_INTENTOS_DESCUBRIMIENTO-intentos[index]))
-                    time.sleep(3)
-                else:
-                    nodos_activos.append(remote_device)
-                    index_devices+=1
-                    print ('Descubierto: %s' % remote_device)
-                    nodo_descubierto = True
-        #ejecución de los hilos
-        for index in range (0, index_devices):
-            thread=threading.Thread(name=nodos_activos[index], target=read_adc_task, args=(index,))
-            th.append(thread)
-        intentos=[]
-        for index in range(0, index_devices):
-            intentos.append(0)
-            th[index].start()
-            time.sleep(1)
+        lectura = ReadAD()
+        # Creación de un hilo por cada nodo activo
+        for i in range(len(nodos_activos)):
+            logging.debug('creando hilo')
+            t = threading.Thread(name=nodos_activos[i], target=worker, args=(lectura, i,))
+            t.start()
+        if len(nodos_activos)==0:
+            logging.debug('No nodes found')
+            sys.exti(-1)
+        else:
+            logging.debug('Waiting for worker threads')
+            main_thread = threading.main_thread()
+            for t in threading.enumerate():
+                if t is not main_thread:
+                    t.join()
+            logging.debug('Counter: %d', lectura.value)
 
     except:
-       print("eRRor")
-
-    finally:
-        for index in range(0, index_devices):
-            if th[index] is not None and th[index].isAlive():
-                th[index].join()
-        if local_device.is_open():
-            local_device.close()
-        exit(-1)
-
-
+        logging.debug('exept')
+        sys.exit(1)
 
 
 if __name__ == '__main__':
     main()
+
