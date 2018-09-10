@@ -13,10 +13,9 @@
 # 3.0 España de Creative Commons.
 
 # Este módulo se utiliza para consultar a la base de datos del centro de cálculo sobre
-# el valor de FWHM de las imágenes capturadas, esta consulta se realiza en función de
-# la fecha introducida en la variable FECHA, telegráf introducirá los datos con el
-# timestamp que viene en la propia imagen obtenida con lo que no importa cuando se ejecute
-# este módulo ya que siempre insertará el valor de FWHM con la fecha correcta
+# el valor de FWHM de las imágenes capturadas, esta consulta es periodica, y lo que se
+#hace es una query que devuelva los cálculos de las imágnes desde unos segundos antes
+#(TIEMPO_ESPERA) hasta el momento actual
 
 
 import math
@@ -26,9 +25,7 @@ import datetime
 import time
 import send_data_to_telegraf
 
-#Editamos el valor de la fecha dependiendo desde cuando queremos obtener la imágenes
-FECHA = datetime.datetime(2018, 6, 22, 0, 0)
-
+TIEMPO_ESPERA=60
 FILTER_LAMBDA = {'J0430': 430, 'gSDSS': 475, 'rSDSS': 625, 'iSDSS': 773, 'J0861': 861, 'zSDSS': 915, 'uJAVA': 348,
                  'J0378': 378, 'J0395': 395, 'J0410': 410, 'J0515': 515, 'J0660': 660}
 FILTER_ZP = {'uJAVA': 21.80, 'J0378': 21.00, 'J0395': 20.80, 'J0410': 21.64, 'J0430': 21.61, 'gSDSS': 23.70,
@@ -111,26 +108,41 @@ def query_images_since(timestamp, url='http://upad.oaj.cefca.es/reduction/t80com
 
 if __name__ == '__main__':
     last_img=[]
-    result = query_images_since(FECHA)
-    print('Total %d' % len(result))
-    if len(result) > 0:
-        for i in range (len(result)):
-            img = result[i]
-            print('Image %s' % i)
-            print('   name: %s' % img['name'])
-            print('   filter %s' % img['filter'])
-            print('   timestamp: %s' % img['timestamp'])
-            print(img['timestamp'])
-            # conversión por horario de verano
-            tiempo = img['timestamp'] + datetime.timedelta(hours=2)
-            #print(tiempo)
+    while (True):
+        contador = 0
+        # get actual date
+        now=datetime.datetime.now()
+        #restamos unos segundos al tiempo actual para utilizarlo como timestamp de la consulta
+        now=now-datetime.timedelta(seconds=TIEMPO_ESPERA)
+        print (now.hour)
+        #Evitamos hacer pool a la BD por la mañana cuando no hay actividad científica y por tanto no hay FWHM
+        if now.hour>16 or now.hour<11:
+            #result = query_images_since(datetime.datetime(now.year, now.month, now.day, now.hour, now.minute))
+            result = query_images_since(datetime.datetime(2018, 1, 1, 16, 0))
+            if len(result) > 0:
+                print ('Total %d' % len(result))
+                print(len(result))
+                for i in range (len(result)):
+                    contador+=1
+                    img = result[i]
+                    print('Image %s' % i)
+                    print('   name: %s' % img['name'])
+                    print('   filter %s' % img['filter'])
+                    print('   timestamp: %s' % img['timestamp'])
+                    print(img['timestamp'])
+                    print('   fwhmg (PSF): %s' % img['fwhmg'])
+                    print('   expected_psf: %s' % img['expected_psf'])
+                    #print(time.mktime(img['timestamp'].timetuple()))
+                    send_data_to_telegraf.send_fwhm_with_timestamp(float(img['fwhmg']),time.mktime(img['timestamp'].timetuple()))
+                    #send_data_to_telegraf.send_fwhm_with_timestamp(float(img['fwhmg']),img['timestamp'])
+                    #send_data_to_telegraf.send_fwhm(float(img['fwhmg']))
+                    time.sleep(0.1)
 
-            print('   fwhmg (PSF): %s' % img['fwhmg'])
-            print('   expected_psf: %s' % img['expected_psf'])
+            else:
+                print('No new imagenes available')
+                #print(time.mktime('2018-5-23'.timetuple()))
+        #esperamos unos segundos antes de volver a preguntar
 
-
-            send_data_to_telegraf.send_fwhm_with_timestamp(float(img['fwhmg']),time.mktime(tiempo.timetuple()))
-            time.sleep(0.1)
-
-    else:
-        print('No new imagenes available')
+        print ("Total imagenes: %s" % contador)
+        break
+        time.sleep (TIEMPO_ESPERA)

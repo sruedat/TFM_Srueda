@@ -15,8 +15,8 @@
 from telegraf.client import TelegrafClient
 import time
 
-#DB_ADDR='192.168.1.44'
-DB_ADDR='10.10.64.109'
+DB_ADDR='192.168.1.44'
+#DB_ADDR='10.10.64.109'
 DB_PORT=8094
 
 # Envío de la metrica de fwhm con timestamp de la adquisición
@@ -24,7 +24,7 @@ def send_fwhm_with_timestamp(fwhm, time):
     client = TelegrafClient(host=DB_ADDR, port=DB_PORT, tags={'host': 'CPD'})
     client.metric('FWHM', {'C080': fwhm},timestamp=int(time*1000000000))
 
-# Envío de la metrica de fwhm el timestamp es el del momento de la inserción
+# Envío de la metrica de fwhm el timestamp es el del momento de la insercción
 def send_fwhm(fwhm):
     client = TelegrafClient(host=DB_ADDR, port=DB_PORT, tags={'host': 'CPD'})
     client.metric('FWHM', {'C080': fwhm})
@@ -32,7 +32,7 @@ def send_fwhm(fwhm):
 # Envío de la metrica de temperatura de los 4 sensores de un nodo y de su valor de alimentación
 def main(nodo,t1,t2,t3,t4,vcc):
     client = TelegrafClient(host=DB_ADDR, port=DB_PORT, tags={'host':nodo})
-    client.metric('Temperatura',{'Sensor1':round(t1,3)})
+    client.metric('Temperatura',{'Sensor1': round(t1,3)})
     client.metric('Temperatura',{'Sensor2':round(t2,3)})
     client.metric('Temperatura',{'Sensor3':round(t3,3)})
     client.metric('Temperatura',{'Sensor4':round(t4,3)})

@@ -41,7 +41,7 @@ import send_data_to_telegraf
 
 REMOTE_NODES_ID = read_node_list.ReadListOfNodesFromFile()
 MAX_INTENTOS_DESCUBRIMIENTO = 3 # Número de intentos de descubrimiento de cada nodo
-MAX_INTENTOS_LEER_DATOS = 200 # Número máximo de fallos seguidos permitidos al leer
+MAX_INTENTOS_LEER_DATOS = 20 # Número máximo de fallos seguidos permitidos al leer
                              # datos de un nodo.
 # Definición lineas de entrada
 IOLINE_IN_3 = IOLine.DIO3_AD3
@@ -51,7 +51,7 @@ IOLINE_IN_0 = IOLine.DIO0_AD0
 # Tensión máxima en las entradas (mv)
 MAX_VOLTAGE_INPUT = 1200
 # Frecuencia de encuesta a los nodos en caso de que NO existan problemas (sg)
-LONG_WAIT=60
+LONG_WAIT=3#30
 # Frecuencia de encuesta a los nodos en caso de que SI existan problemas (sg)
 SHORT_WAIT=1
 
@@ -126,13 +126,12 @@ def main():
         try:
             while True and (timeouts[i]< MAX_INTENTOS_LEER_DATOS):
                 logging.debug('Stamp: %s',  str(datetime.now()))
-                logging.debug("TIMEOUTS %s", timeouts) #estudiar bien esto y quitar
                 if c.read_AD(i):
                     timeouts[i]+=1
                     logging.debug("Timeouts %s", timeouts)
                     pause=SHORT_WAIT
                 else:
-                    #timeouts[i] = 0 #reseteamos la cuenta de timeouts
+                    timeouts[i] = 0 #reseteamos la cuenta de timeouts
                     pause = LONG_WAIT
                 logging.debug('Sleeping %0.02f', pause)
                 time.sleep(pause)
@@ -174,30 +173,32 @@ def main():
     local_device = XBeeDevice(port, baud_rate)
     xbee_network = local_device.get_network()
     local_device.open()
-    local_device.set_sync_ops_timeout(40)
-    descubre_nodos()
+    #descubre_nodos()
+    print(local_device.get_sync_ops_timeout())
+    local_device.set_sync_ops_timeout(10)
+    print(local_device.get_sync_ops_timeout())
+   # try:
+    #      lectura = ReadAD()
+    #    # Creación de un hilo por cada nodo activo
+    #    for i in range(len(nodos_activos)):
+    #        logging.debug('creando hilo')
+    #        t = threading.Thread(name=nodos_activos[i], target=worker, args=(lectura, i,))
+    #        t.start()
+    #    if len(nodos_activos)==0:
+    #        logging.debug('No nodes found')
+    #        sys.exti(-1)
+    #    else:
+    #        logging.debug('Waiting for worker threads')
+    #        main_thread = threading.main_thread()
+    #        for t in threading.enumerate():
+    #            if t is not main_thread:
+    #                t.join()
+    #        logging.debug('Counter: %d', lectura.value)
 
-    try:
-        lectura = ReadAD()
-        # Creación de un hilo por cada nodo activo
-        for i in range(len(nodos_activos)):
-            logging.debug('creando hilo')
-            t = threading.Thread(name=nodos_activos[i], target=worker, args=(lectura, i,))
-            t.start()
-        if len(nodos_activos)==0:
-            logging.debug('No nodes found')
-            sys.exti(-1)
-        else:
-            logging.debug('Waiting for worker threads')
-            main_thread = threading.main_thread()
-            for t in threading.enumerate():
-                if t is not main_thread:
-                    t.join()
-            logging.debug('Counter: %d', lectura.value)
 
-    except:
-        logging.debug('exept')
-        sys.exit(1)
+    #except:
+    #   logging.debug('exept')
+    #   sys.exit(1)
 
 
 if __name__ == '__main__':
